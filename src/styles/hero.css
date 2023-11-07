@@ -46,6 +46,7 @@
 }
 
 .info h3 span {
+  font-size: var(--h3-size);
   color: var(--blue-color);
 }
 
@@ -62,5 +63,5 @@
 }
 
 .hero-image img {
-  width: 34rem;
+  width: 32rem;
 }

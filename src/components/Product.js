@@ -27,42 +27,32 @@ const reducer = (state, action) => {
     case 'set-products':
       return {
         ...state,
-        products: action.payload,
-        loading: false,
-        error: '',
-        infoLoading: false
+        products: action.payload
       }
     case 'set-product-info': 
       return {
         ...state,
-        productInfo: action.payload,
-        loading: false,
-        error: '',
-        infoLoading: false
+        productInfo: action.payload
       }
     case 'set-loading':
       return {
         ...state,
-        loading: action.loading
+        loading: action.loadingValue
       }
     case 'set-info-loading':
       return {
         ...state,
-        infoLoading: action.loading
+        infoLoading: action.loadingValue
+      }
+    case 'set-error': 
+      return {
+         ...state,
+         error: action.errorData
       }
     case 'set-error2': 
       return {
          ...state,
-         infoLoading: false,
-         loading: false,
          error2: action.errorData
-      }
-    case "FETCH_ERROR":
-      return {
-        ...state,
-        loading: false,
-        error: action.errorData,
-        infoLoading: false
       }
     default:
      return {
@@ -85,14 +75,26 @@ const Product = () => {
       
       console.log(data)
       
-      dispatch({type: 'set-product-info', payload: data});
+      if(action === "set-product-info") {
+        dispatch({type: 'set-product-info', payload: data});
+        dispatch({type: 'set-error', errorData: ''});
+        dispatch({type: 'set-info-loading', loadingValue: false});
+      } else {
+        dispatch({type: 'set-products', payload: data});
+        dispatch({type: 'set-error2', errorData: ''});
+        dispatch({type: 'set-loading', loadingValue: false});
+      }
     })
     .catch(err => {
       const errorMsg = 'Failed fetching data!';
       
-      alert(errorMsg)
-      dispatch({type: 'set-error', errorData: errorMsg});
-      dispatch({type: 'set-error2', errorData: errorMsg});
+      if(action === 'set-product-info') {
+        dispatch({type: 'set-error', errorData: errorMsg});
+        dispatch({type: 'set-info-loading', loadingValue: false});
+      } else {
+        dispatch({type: 'set-error2', errorData: errorMsg});
+        dispatch({type: 'set-loading', loadingValue: false});
+      }
     });
   }
   
@@ -108,7 +110,7 @@ const Product = () => {
     
     console.log('render useEffect')
     console.log(loading)
-  }, []);   
+  }, [infoLoading]);   
   
   return (
   <>
@@ -145,14 +147,24 @@ const Product = () => {
        </div>
      </div>
         </React.Fragment>
-      )) 
+      ))
+    }
+    {
+      error !== '' && <h3 className="error-msg">{error}</h3>
+    }
+    {
+     infoLoading && <h3 className="loading">Loading...</h3>  
     }
     </section>
      <section className="you-might-also-like">
-        {
-          products.length === 0 ? <h3 className="empty-msg">Product is empty...</h3> : <h2>You Might Also Like</h2>
-        }
+      <h2>You Might Also Like</h2>
       <div className="card-list">
+    {
+      error2 !== '' && <h3 className="error-msg dua">{error2}</h3>
+    }
+    {
+      loading && <h3 className="loading dua">Loading...</h3>  
+    }
         {
           products.length !== 0 && products.map(({id, title, price, image}) => (
        <div className="card" key={id}>
