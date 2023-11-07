@@ -1,0 +1,108 @@
+/* Product */
+.product {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;  
+  margin: 5.5rem 0;
+  box-sizing: border-box;
+}
+
+/* Product images */
+.product-images {
+  display: grid;
+  grid-template-columns: auto 2fr;
+  justify-items: center;
+  gap: 4rem;
+  align-items: center;
+}
+
+.main-image {
+  width: 75%;
+  order: 2;
+}
+
+.other-images {
+  display: grid;
+  gap: 4rem;
+  width: 4.5rem;
+  box-sizing: border-box;
+  order: 1;
+}
+
+.other-images img {
+  width: 100%;
+}
+
+
+/* Product info */
+.product-info {
+  display: grid;
+  align-content: start;
+  padding: 4rem;
+  box-sizing: border-box;  
+}
+
+.product-info h3 {
+  color: var(--blue-color);
+}
+
+.product-info .buttons {
+  display: flex;
+  gap: 2rem;
+  box-sizing: border-box;
+  margin-top: 2rem;
+}
+
+.product-info .buttons .counter {
+  display: flex;
+  align-items: baseline;
+  background-color: #eee;
+}
+
+.product-info .buttons button {
+  border: 0;
+  height: 4.5rem;
+  padding: 0 2.2rem;
+  box-sizing: border-box;
+  font-size: var(--paragraph-size);
+  transition: 300ms;
+  font-weight: bold;
+}
+
+.product-info .buttons .increment, 
+.product-info .buttons .decrement {
+  font-size: var(--paragraph-size);
+  color: #bbb;
+}
+
+.product-info .buttons .count {
+  font-size: var(--paragraph-size);
+  color: #555;
+  font-weight: bold;
+}
+
+.product-info .buttons .add-to-cart-btn {
+  background-color: var(--blue-color);
+  color: #fff;
+}
+
+/* You might also like */
+.you-might-also-like {
+  display: grid;
+  width: 100%;
+}
+
+.you-might-also-like .card-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  column-gap: 2rem;
+  row-gap: 4rem;
+  box-sizing: border-box;
+  margin-top: 2rem;
+}
+
+
+.you-might-also-like .card-list .card .card-image {
+  background: url(./../img/asus-zenbook.png) center / 70% no-repeat #eee;
+}

@@ -1,0 +1,81 @@
+:root {
+  --paragraph-size: clamp(1.4rem, 1.6vw, 1.6rem);
+  --paragraph-size2: clamp(1.4rem, 1.6vw, 1.6rem);
+  --h2-size: calc(var(--paragraph-size) * 1.2 * 1.2 * 1.2 * 1.2);
+  --h1-size: calc(var(--paragraph-size) * 1.2 * 1.2 * 1.2 * 1.2 * 1.4);
+  --h3-size: calc(var(--paragraph-size) * 1.2 * 1.2);
+  --h4-size: calc(var(--paragraph-size) * 1.2);
+  font-size: 62.5%;
+  --navbar-title-size: calc(var(--paragraph-size) * 1.2 * 1.2);
+  --blue-color: #0047AB;
+}
+
+body {
+  background: #fff;
+  text-size-adjust: none;
+}
+
+.App {
+  font-family: helvetica, Sans-Serif;
+  max-width: 800px;
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  margin: auto;
+  height: auto;
+}
+
+h1 {
+  font-size: var(--h1-size);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  width: fit-content;
+  font-weight: bold;
+  color: #333;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: var(--h2-size);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #444;
+}
+
+h3 {
+  font-size: var(--h3-size);
+  margin-bottom: .5rem;
+  line-height: 1.1;
+  font-weight: bold;
+  color: #555;
+}
+
+h4 {
+  font-size: var(--h4-size);
+  margin-bottom: .5rem;
+  line-height: 1.5;
+  color: rgba(0,0,0,.4);
+  font-weight: 600;
+}
+
+p {
+  margin-bottom: .5rem;
+  font-size: var(--paragraph-size);
+  line-height: 1.5;
+  box-sizing: border-box;
+  max-width: 50ch;
+  color: #777;
+}
+
+.loading-product {
+  text-align: center;
+   width: 100%;
+  grid-column: 1 / -1;
+}
+
+.empty-msg {
+  text-align: center;
+   width: 100%;
+  grid-column: 1 / -1;
+}

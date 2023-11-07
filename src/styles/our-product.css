@@ -1,0 +1,50 @@
+.our-product {
+  width: 100%;
+  text-align: center;
+}
+
+.our-product .categories {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.our-product .card-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  column-gap: 2rem;
+  row-gap: 4rem;
+  box-sizing: border-box;
+  margin-top: 2rem;
+}
+
+.card-list .card {
+  display: grid;
+  row-gap: 2rem;
+  min-width: 18rem;
+  grid-template-rows: 15rem auto;
+}
+
+.card-info {
+  text-align: left;
+  display: grid;
+}
+
+.card-info .title {
+  color: #555;
+}
+
+.card-info .price {
+  font-size: var(--paragraph-size);
+  color: var(--blue-color);
+  font-weight: bold;
+}
+
+.categories .selected {
+  color: #555;
+}
+
+.error-msg {
+  color: red;
+}
