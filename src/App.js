@@ -1,5 +1,5 @@
 import React, {useEffect, useState, createContext, useReducer} from 'react';
-import {Routes, Route} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import ProductInfo from './pages/ProductInfo';
@@ -8,10 +8,6 @@ import './styles/reset.css';
 import './App.css';
 
 const App = () => {
-  useEffect(() => {
-    
-  }, []);
-  
   return (
     <div className="App">
       <Navbar/>
@@ -22,7 +18,7 @@ const App = () => {
         <Route path="/product-info"
                exact
                element={<ProductInfo/>}/>
-      </Routes>
+        </Routes>
     </div>
   );
 }

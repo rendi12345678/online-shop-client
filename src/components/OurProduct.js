@@ -1,8 +1,7 @@
 import React, {useReducer, useRef, useEffect, useContext} from 'react';
 import './../styles/our-product.css';
 import axios from 'axios';
-import { HashLink } from 'react-router-hash-link';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const initialState = {
   newProducts: [],
@@ -65,29 +64,11 @@ const OurProduct = () => {
   const onsaleRef = useRef();
   const featureProductsRef = useRef();
   const serverUrl = 'https://lovely-tan-dove.cyclic.app';
+  const navigate = useNavigate();
   
   const getImage = image => `/img/${image}`;
   
-  const renderCards = ({image, title, price, id, description}) => {
-    return (
-      <div className="card"
-           key={id}
-           onClick={() => sendDataToServer({id, image, title, description, price})}>
-        <a className="card-image" 
-           href="/product-info"
-           style={{
-          background: `url(${getImage(image)}) center / 70% no-repeat #eee`
-        }}>
-        </a>
-        <div className="card-info">
-          <h3 className="title">{title}</h3>
-          <p className="price">Rp {price}</p>
-        </div>
-      </div>
-    );
-  }
-  
-  const setProducts = category => {
+  const addProducts = category => {
     if(category === 'new-products') {
       dispatch({type: "set-loading", loading: true})
       newProductsRef.current.classList.add('selected');
@@ -134,11 +115,11 @@ const OurProduct = () => {
     }
   }
   
-  const sendDataToServer = ({id, title, image, description, price}) => {
+  const sendDataToServerAndMovePage = (url, {id, title, image, description, price}) => {
     console.log('send data to server')
-    const url = `${serverUrl}/api/product-info`;
+    const productInfoUrl = `${serverUrl}/api/product-info`;
     
-    axios.post(url, {
+    axios.post(productInfoUrl, {
       title,
       id,
       image,
@@ -147,6 +128,7 @@ const OurProduct = () => {
     })
     .then(res => {
       console.log(res.data.msg);
+      movePage(url);
     })
     .then(err => {
       console.log('Failed send data to server!');
@@ -154,9 +136,31 @@ const OurProduct = () => {
     
     console.log(title)
   }
+  
+  const movePage = url => {
+    navigate(url);
+  }
+  
+  const renderCards = ({image, title, price, id, description}) => {
+    return (
+      <div className="card"
+           key={id}
+           onClick={() => sendDataToServerAndMovePage('product-info', {id, image, title, description, price})}>
+        <figure className="card-image" 
+           style={{
+          background: `url(${getImage(image)}) center / 70% no-repeat #eee`
+        }}>
+        </figure>
+        <div className="card-info">
+          <h3 className="title">{title}</h3>
+          <p className="price">Rp {price}</p>
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
-    setProducts('new-products');
+    addProducts('new-products');
   }, [])
   
   return (
@@ -164,13 +168,13 @@ const OurProduct = () => {
       <div className="categories">
         <h4 className="new-products selected"
             ref={newProductsRef}
-            onClick={() => setProducts('new-products')}>New Products</h4>
+            onClick={() => addProducts('new-products')}>New Products</h4>
         <h4 className="onsale" 
             ref={onsaleRef}  
-            onClick={() => setProducts('onsale')}>Onsale</h4>
+            onClick={() => addProducts('onsale')}>Onsale</h4>
         <h4 className="feature-products"
             ref={featureProductsRef}
-            onClick={() => setProducts('feature-products')}>Feature Products</h4>
+            onClick={() => addProducts('feature-products')}>Feature Products</h4>
       </div>
       <div className="card-list" ref={cardListRef}>
         {
@@ -193,7 +197,7 @@ const OurProduct = () => {
           loading && <h3>Loading...</h3>
         }
         {
-          error !== '' && <h3 className="error-msg">{error}</h3>
+          error !== '' && <h3 className="error-msg dua">{error}</h3>
         }
     </section>
   );

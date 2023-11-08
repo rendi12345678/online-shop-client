@@ -110,7 +110,7 @@ const Product = () => {
     
     console.log('render useEffect')
     console.log(loading)
-  }, [infoLoading]);   
+  }, []);   
   
   return (
   <>
