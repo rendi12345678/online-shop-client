@@ -1,6 +1,7 @@
 import React, {useReducer, useEffect, useContext} from 'react';
 import image from '../img/asus-zenbook.png';
 import axios from 'axios';
+import { FunctionsContext } from '../App.js';
 
 const initialState = {
   count: 0,
@@ -64,18 +65,24 @@ const reducer = (state, action) => {
 const Product = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { count, products = [], productInfo = [], loading, error, infoLoading, error2 } = state;
-  const serverUrl = 'https://lovely-tan-dove.cyclic.app';
-  
-  const getImage = image => `/img/${image}`;
+  const {sendDataToServerAndMovePage, getImage, serverUrl} = useContext(FunctionsContext);
   
   const getDataFromServerAndSetDataToState = (url, action) => {
     axios.get(url)
     .then(res => {
       const data = res.data.productData;
       
-      console.log(data)
+      successResponse(action, data);
+    })
+    .catch(err => {
+      const errorMsg = 'Failed fetching data!';
       
-      if(action === "set-product-info") {
+      errorResponse(action, errorMsg);
+    });
+  }
+  
+  const successResponse = (action, data) => {
+    if(action === "set-product-info") {
         dispatch({type: 'set-product-info', payload: data});
         dispatch({type: 'set-error', errorData: ''});
         dispatch({type: 'set-info-loading', loadingValue: false});
@@ -84,18 +91,16 @@ const Product = () => {
         dispatch({type: 'set-error2', errorData: ''});
         dispatch({type: 'set-loading', loadingValue: false});
       }
-    })
-    .catch(err => {
-      const errorMsg = 'Failed fetching data!';
-      
-      if(action === 'set-product-info') {
+  }
+  
+  const errorResponse = (action, errorMsg) => {
+    if(action === 'set-product-info') {
         dispatch({type: 'set-error', errorData: errorMsg});
         dispatch({type: 'set-info-loading', loadingValue: false});
       } else {
         dispatch({type: 'set-error2', errorData: errorMsg});
         dispatch({type: 'set-loading', loadingValue: false});
       }
-    });
   }
   
   const fetchData = () => {
@@ -166,8 +171,8 @@ const Product = () => {
       loading && <h3 className="loading dua">Loading...</h3>  
     }
         {
-          products.length !== 0 && products.map(({id, title, price, image}) => (
-       <div className="card" key={id}>
+          products.length !== 0 && products.map(({id, title, price, image, description}) => (
+       <div className="card" key={id} onClick={() => sendDataToServerAndMovePage('', {id, image, title, description, price})}>
         <figure className="card-image" style={{
           background: `url(${getImage(image)}) center / 70% no-repeat #eee`
         }}></figure>

@@ -1,7 +1,7 @@
 import React, {useReducer, useRef, useEffect, useContext} from 'react';
 import './../styles/our-product.css';
 import axios from 'axios';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { FunctionsContext } from '../App.js';
 
 const initialState = {
   newProducts: [],
@@ -21,7 +21,7 @@ const reducer = (state, action) => {
         error: '',
         selectedCategory: 'new-products'
       }
-    case "set-onsale":
+    case "set-onsale-products":
       return {
         onsale: action.payloads,
         loading: false,
@@ -63,82 +63,77 @@ const OurProduct = () => {
   const newProductsRef = useRef();
   const onsaleRef = useRef();
   const featureProductsRef = useRef();
-  const serverUrl = 'https://lovely-tan-dove.cyclic.app';
-  const navigate = useNavigate();
-  
-  const getImage = image => `/img/${image}`;
+  const {
+    sendDataToServerAndMovePage, 
+    getImage, 
+    serverUrl
+  } = useContext(FunctionsContext);
   
   const addProducts = category => {
     if(category === 'new-products') {
-      dispatch({type: "set-loading", loading: true})
+      addNewProducts();
+    }
+    
+    if(category === 'onsale') {
+      addOnsaleProducts();
+    }
+    
+    if(category === 'feature-products') {
+      addFeatureProducts();
+    }
+  }
+  
+  const setState = (response, type) => {
+    if(response === 'FETCH_ERROR') {
+        dispatch({type: 'FETCH_ERROR'});
+      } 
+      
+      if(response.length !== 0) {
+        dispatch({type: type, payloads: response})
+      }
+  }
+  
+  const getProducts = async endpoint => {
+    try {
+      const response = await axios.get(`${serverUrl}${endpoint}`);
+      
+      return response.data.productData;
+    } catch(err) {
+      return 'FETCH_ERROR';
+    }
+  }
+  
+  const addNewProducts = async () => {
+    dispatch({type: "set-loading", loading: true})
       newProductsRef.current.classList.add('selected');
       onsaleRef.current.classList.remove('selected');
       featureProductsRef.current.classList.remove('selected');
       
-        axios.get(`${serverUrl}/api/new-products`)
-    .then(res => {
-      dispatch({type: 'set-new-products', payloads: res.data})
-    })
-    .catch(error => {
-      dispatch({type: 'FETCH_ERROR'})
-    });
-    }
-    
-    if(category === 'onsale') {
-      dispatch({type: "set-loading", loading: true})
+      const response = await getProducts('/api/new-products');
+      
+      setState(response, 'set-new-products');
+  }
+  
+  const addOnsaleProducts = async () => {
+    dispatch({type: "set-loading", loading: true})
       onsaleRef.current.classList.add('selected');
       newProductsRef.current.classList.remove('selected');
       featureProductsRef.current.classList.remove('selected');
-      axios.get(`${serverUrl}/api/onsale`)
-    .then(res => {
-      console.log(res.data)
-      dispatch({type: 'set-new-products', payloads: res.data});
-    })
-    .catch(error => {
-      dispatch({type: 'FETCH_ERROR'})
-    });
-    }
-    
-    if(category === 'feature-products') {
-      dispatch({type: "set-loading", loading: true})
+      
+      const response = await getProducts('/api/onsale');
+      
+      setState(response, 'set-onsale-products');
+  }
+  
+  const addFeatureProducts = async () => {
+    dispatch({type: "set-loading", loading: true})
       featureProductsRef.current.classList.add('selected');
       onsaleRef.current.classList.remove('selected');
       newProductsRef.current.classList.remove('selected');
       
-        axios.get(`${serverUrl}/api/feature-products`)
-    .then(res => {
-      dispatch({type: 'set-new-products', payloads: res.data});
-    })
-    .catch(error => {
-      dispatch({type: 'FETCH_ERROR'})
-    });
-    }
-  }
-  
-  const sendDataToServerAndMovePage = (url, {id, title, image, description, price}) => {
-    console.log('send data to server')
-    const productInfoUrl = `${serverUrl}/api/product-info`;
-    
-    axios.post(productInfoUrl, {
-      title,
-      id,
-      image,
-      description,
-      price
-    })
-    .then(res => {
-      console.log(res.data.msg);
-      movePage(url);
-    })
-    .then(err => {
-      console.log('Failed send data to server!');
-    });
-    
-    console.log(title)
-  }
-  
-  const movePage = url => {
-    navigate(url);
+      const response = await getProducts('/api/feature-products');
+      
+      setState(response, 'set-feature-products');
   }
   
   const renderCards = ({image, title, price, id, description}) => {
@@ -178,17 +173,17 @@ const OurProduct = () => {
       </div>
       <div className="card-list" ref={cardListRef}>
         {
-          (selectedCategory === 'new-products' && newProducts.productData) ? newProducts.productData.map(product => {
+          (selectedCategory === 'new-products' && newProducts) ? newProducts.map(product => {
             return renderCards(product);
           }) : null
         }
         {
-          (selectedCategory === 'onsale' && onsale.productData) ? onsale.productData.map(product => {
+          (selectedCategory === 'onsale' && onsale) ? onsale.map(product => {
             return renderCards(product);
           }) : null
         }
         {
-          (selectedCategory === 'feature-products' && featureProducts.productData) ? featureProducts.productData.map(product => {
+          (selectedCategory === 'feature-products' && featureProducts) ? featureProducts.map(product => {
             return renderCards(product);
           }) : null
         }
