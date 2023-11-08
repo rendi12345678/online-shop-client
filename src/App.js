@@ -12,7 +12,31 @@ export const FunctionsContext = createContext();
 
 const App = () => {
   const navigate = useNavigate();
-  const serverUrl = 'https://lovely-tan-dove.cyclic.app';
+  const serverUrl = 'http://localhost:5000';
+  
+  const addProductsToState = async (endpoint, type, dispatch) => {
+    const response = await getProducts(endpoint);
+    
+    if(response === 'FETCH_ERROR') {
+      dispatch({type: 'FETCH_ERROR'});
+    } 
+      
+    if(response.length !== 0) {
+      dispatch({type: type, payloads: response})
+    }
+      
+    console.log(response)
+  }
+  
+  const getProducts = async endpoint => {
+    try {
+      const response = await axios.get(`${serverUrl}${endpoint}`);
+      
+      return response.data.productData;
+    } catch(err) {
+      return 'FETCH_ERROR';
+    }
+  }
   
   const sendDataToServerAndMovePage = (url, {id, title, image, description, price}) => {
     console.log('send data to server')
@@ -49,7 +73,9 @@ const App = () => {
     <FunctionsContext.Provider value={{
       sendDataToServerAndMovePage,
       getImage,
-      serverUrl
+      serverUrl,
+      getProducts,
+      addProductsToState
     }}>
       <Navbar/>
       <Routes>

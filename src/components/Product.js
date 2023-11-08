@@ -172,9 +172,11 @@ const Product = () => {
     }
         {
           products.length !== 0 && products.map(({id, title, price, image, description}) => (
-       <div className="card" key={id} onClick={() => sendDataToServerAndMovePage('', {id, image, title, description, price})}>
+       <div className="card" 
+            key={id} 
+            onClick={() => sendDataToServerAndMovePage('', {id, image, title, description, price})}>
         <figure className="card-image" style={{
-          background: `url(${getImage(image)}) center / 70% no-repeat #eee`
+          background: `url(${getImage(image)}) center / 50% no-repeat #eee`,
         }}></figure>
         <div className="card-info">
           <h3 className="title">{title}</h3>

@@ -1,11 +1,12 @@
-import React, {useEffect, useReducer} from 'react';
+import React, {useEffect, useReducer, useContext} from 'react';
 import './../styles/hero.css';
 import './../styles/reset.css';
 import heroImage from './../img/asus-zenbook.png';
 import axios from 'axios';
+import { FunctionsContext } from '../App.js';
 
 const initialState = {
-  heroProduct: {productData: {}},
+  heroProduct: {},
   loading: true,
   error: '',
 }
@@ -16,7 +17,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         loading: false,
-        heroProduct: action.payload,
+        heroProduct: action.payloads,
         error: ''
       }
     case "FETCH_ERROR":
@@ -33,45 +34,41 @@ const reducer = (state, action) => {
 const Hero = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
-    heroProduct = {productData: {}},
+    heroProduct = {},
     error,
     loading
   } = state;
-  const serverUrl = 'https://lovely-tan-dove.cyclic.app';
+  const {
+    sendDataToServerAndMovePage, 
+    getImage, 
+    serverUrl,
+    getProducts,
+    addProductsToState,
+  } = useContext(FunctionsContext);
   
-  const renderHeroProduct = ({id, title, image, description, price}) => {
-    if(heroProduct != null) {
-      if(heroProduct) {
-        return (
+  
+  const renderHeroProduct = heroProduct => {
+    const {id, title, image, description, price} = heroProduct;
+    
+      return (
         <>
         <div className="info">
           <h1>{title}</h1>
           <h3><span>Rp {price}</span></h3> 
           <p>{description}</p>
           <div className="buttons">
-             <button>Shop Now</button>
+             <button onClick={() => sendDataToServerAndMovePage('/product-info', heroProduct)}>Shop Now</button>
           </div>
         </div>
         <figure className="hero-image">
           <img src={getImage(image)} alt="Laptop"/>
         </figure>
         </>
-        );
-      }
-    }
+     ); 
   }
   
-  const getImage = image => `/img/${image}`;
-  
   useEffect(() => {
-    axios.get(`${serverUrl}/api/hero-product`)
-    .then(res => {
-      console.log(res.data)
-      dispatch({type: 'set-hero-product', payload: res.data});
-    })
-    .catch(error => {
-      dispatch({type: 'FETCH_ERROR'});
-    });
+    addProductsToState('/api/hero-product', 'set-hero-product', dispatch);
   }, []);
   
   return (
@@ -84,7 +81,7 @@ const Hero = () => {
           error !== '' && <h3 className="error-msg dua">{error}</h3>
         }
         {
-          Object.keys(heroProduct.productData).length !== 0 && renderHeroProduct(heroProduct.productData) 
+          heroProduct && renderHeroProduct(heroProduct) 
         }
       </div>
     </section>

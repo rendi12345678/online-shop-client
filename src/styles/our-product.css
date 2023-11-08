@@ -10,9 +10,8 @@
 }
 
 .our-product .card-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   column-gap: 2rem;
   row-gap: 4rem;
   box-sizing: border-box;
@@ -21,9 +20,10 @@
 
 .card-list .card {
   display: grid;
+  box-sizing: border-box;
   row-gap: 2rem;
-  min-width: 18rem;
-  grid-template-rows: 15rem auto;
+  grid-template-rows: 17.5rem auto;
+  align-content: center;
 }
 
 .card-info {
@@ -36,9 +36,9 @@
 }
 
 .card-info .price {
-  font-size: var(--paragraph-size);
+  font-size: calc(var(--paragraph-size) + .2rem);
   color: var(--blue-color);
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .categories .selected {

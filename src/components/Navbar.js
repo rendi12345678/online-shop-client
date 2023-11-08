@@ -38,7 +38,7 @@ return (
       <HashLink smooth to="/#project-section" onClick={handleLinkClick}>Products</HashLink>
       </li>
       <li>
-      <HashLink smooth to="/#contact-section" onClick={handleLinkClick}>Card</HashLink>
+      <HashLink smooth to="/#contact-section" onClick={handleLinkClick}>Cart <span>{0}</span></HashLink>
       </li>
     </ul>
   </nav>

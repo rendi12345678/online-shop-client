@@ -115,6 +115,11 @@ ul li a {
   position: relative;
 }
 
+ul li a span {
+  color: var(--blue-color);
+  font-weight: bold;
+}
+
 ul li a:hover {
   color: var(--blue-color);
   filter: brightness(80%);

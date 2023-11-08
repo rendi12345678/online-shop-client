@@ -33,7 +33,6 @@
   width: 100%;
 }
 
-
 /* Product info */
 .product-info {
   display: grid;
@@ -93,16 +92,10 @@
 }
 
 .you-might-also-like .card-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
   column-gap: 2rem;
   row-gap: 4rem;
   box-sizing: border-box;
   margin-top: 2rem;
-}
-
-
-.you-might-also-like .card-list .card .card-image {
-  background: url(./../img/asus-zenbook.png) center / 70% no-repeat #eee;
 }

@@ -66,7 +66,9 @@ const OurProduct = () => {
   const {
     sendDataToServerAndMovePage, 
     getImage, 
-    serverUrl
+    serverUrl,
+    getProducts,
+    addProductsToState
   } = useContext(FunctionsContext);
   
   const addProducts = category => {
@@ -83,57 +85,91 @@ const OurProduct = () => {
     }
   }
   
-  const setState = (response, type) => {
-    if(response === 'FETCH_ERROR') {
-        dispatch({type: 'FETCH_ERROR'});
-      } 
+  const addNewProducts = () => {
+   dispatch({type: "set-loading", loading: true})
+   setClasslist([
+        {
+          element: newProductsRef, 
+          className: 'selected',
+          action: 'add'
+        }, 
+        {
+          element: onsaleRef, 
+          className: 'selected',
+          action: 'remove'
+        },
+        {
+          element: featureProductsRef,
+          className: 'selected',
+          action: 'remove'
+        }]); 
       
-      if(response.length !== 0) {
-        dispatch({type: type, payloads: response})
-      }
+      addProductsToState('/api/new-products', 'set-new-products', dispatch);
   }
   
-  const getProducts = async endpoint => {
-    try {
-      const response = await axios.get(`${serverUrl}${endpoint}`);
+  const addOnsaleProducts = () => {
+    dispatch({type: "set-loading", loading: true});
+    setClasslist([
+        {
+          element: newProductsRef, 
+          className: 'selected',
+          action: 'remove'
+        }, 
+        {
+          element: onsaleRef, 
+          className: 'selected',
+          action: 'add'
+        },
+        {
+          element: featureProductsRef,
+          className: 'selected',
+          action: 'remove'
+        }]);
       
-      return response.data.productData;
-    } catch(err) {
-      return 'FETCH_ERROR';
-    }
+      
+      addProductsToState('/api/onsale', 'set-onsale-products', dispatch);
   }
   
-  const addNewProducts = async () => {
+  const addFeatureProducts = () => {
     dispatch({type: "set-loading", loading: true})
-      newProductsRef.current.classList.add('selected');
-      onsaleRef.current.classList.remove('selected');
-      featureProductsRef.current.classList.remove('selected');
+    setClasslist([
+        {
+          element: newProductsRef, 
+          className: 'selected',
+          action: 'remove'
+        }, 
+        {
+          element: onsaleRef, 
+          className: 'selected',
+          action: 'remove'
+        },
+        {
+          element: featureProductsRef,
+          className: 'selected',
+          action: 'add'
+        }]);
       
-      const response = await getProducts('/api/new-products');
-      
-      setState(response, 'set-new-products');
+      addProductsToState('/api/feature-products', 'set-feature-products', dispatch);
   }
   
-  const addOnsaleProducts = async () => {
-    dispatch({type: "set-loading", loading: true})
-      onsaleRef.current.classList.add('selected');
-      newProductsRef.current.classList.remove('selected');
-      featureProductsRef.current.classList.remove('selected');
-      
-      const response = await getProducts('/api/onsale');
-      
-      setState(response, 'set-onsale-products');
+  const setClasslist = refs => {
+    refs.map(({element, className, action}) => {
+     if(action === "add") {
+       addClasslist(element, className);
+     }
+    
+     if(action === "remove") {
+       removeClasslist(element, className);
+     }
+    });
   }
   
-  const addFeatureProducts = async () => {
-    dispatch({type: "set-loading", loading: true})
-      featureProductsRef.current.classList.add('selected');
-      onsaleRef.current.classList.remove('selected');
-      newProductsRef.current.classList.remove('selected');
-      
-      const response = await getProducts('/api/feature-products');
-      
-      setState(response, 'set-feature-products');
+  const addClasslist = (element, className) => {
+    element.current.classList.add(className);
+  }
+  
+  const removeClasslist = (element, className) => {
+    element.current.classList.remove(className);
   }
   
   const renderCards = ({image, title, price, id, description}) => {
@@ -143,7 +179,7 @@ const OurProduct = () => {
            onClick={() => sendDataToServerAndMovePage('product-info', {id, image, title, description, price})}>
         <figure className="card-image" 
            style={{
-          background: `url(${getImage(image)}) center / 70% no-repeat #eee`
+          background: `url(${getImage(image)}) center / 50% no-repeat #eee`,
         }}>
         </figure>
         <div className="card-info">
