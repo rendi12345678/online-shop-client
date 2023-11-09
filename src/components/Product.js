@@ -67,7 +67,7 @@ const Product = () => {
   const { count, products = [], productInfo = [], loading, error, infoLoading, error2 } = state;
   const {sendDataToServerAndMovePage, getImage, serverUrl} = useContext(FunctionsContext);
   
-  const getDataFromServerAndSetDataToState = (url, action) => {
+  const addDataToState = (url, action) => {
     axios.get(url)
     .then(res => {
       const data = res.data.productData;
@@ -104,8 +104,8 @@ const Product = () => {
   }
   
   const fetchData = () => {
-   getDataFromServerAndSetDataToState(`${serverUrl}/api/product-info`, 'set-product-info');
-    getDataFromServerAndSetDataToState(`${serverUrl}/api/you-might-also-like-products`, 'set-product');
+    addDataToState(`${serverUrl}/api/product-info`, 'set-product-info');
+    addDataToState(`${serverUrl}/api/you-might-also-like-products`, 'set-product');
     
     console.log('render');
   }
@@ -121,25 +121,25 @@ const Product = () => {
   <>
     <section className="product">
     {
-      (productInfo.length !== 0 && infoLoading === false) && productInfo.map(product => (
-        <React.Fragment key={product.id}>
+      (productInfo.length !== 0 && infoLoading === false) && productInfo.map(({image, title, price, id, description}) => (
+        <React.Fragment key={id}>
       <div className="product-images">
-       <img src={getImage(product.image)}
+       <img src={getImage(image)}
             alt="laptop"
             className="main-image"/>
        <figure className="other-images">
-         <img src={getImage(product.image)}  
+         <img src={getImage(image)}  
               alt="laptop"/>
-         <img src={getImage(product.image)}
+         <img src={getImage(image)}
               alt="laptop"/>
-         <img src={getImage(product.image)}
+         <img src={getImage(image)}
               alt="laptop"/>
        </figure>
      </div>
      <div className="product-info">
-       <h1>{product.title}</h1>
-       <h3>Rp {product.price}</h3>
-       <p>{product.description}</p>
+       <h1>{title}</h1>
+       <h3>Rp {price}</h3>
+       <p>{description}</p>
        <div className="buttons">
          <div className="counter">
            <button className="decrement"
@@ -148,7 +148,8 @@ const Product = () => {
            <button className="increment"
                    onClick={() => dispatch({type: 'increment'})}>+</button>
          </div>
-         <button className="add-to-cart-btn">Add To Cart</button>
+         <button className="add-to-cart-btn"
+                 onClick={() => sendDataToServerAndMovePage('cart', {image, title, price, id, description, count})}>Add To Cart</button>
        </div>
      </div>
         </React.Fragment>
@@ -174,7 +175,7 @@ const Product = () => {
           products.length !== 0 && products.map(({id, title, price, image, description}) => (
        <div className="card" 
             key={id} 
-            onClick={() => sendDataToServerAndMovePage('', {id, image, title, description, price})}>
+            onClick={() => sendDataToServerAndMovePage('product-info', {id, image, title, description, price})}>
         <figure className="card-image" style={{
           background: `url(${getImage(image)}) center / 50% no-repeat #eee`,
         }}></figure>

@@ -18,16 +18,19 @@ export const FunctionsContext = createContext();
 const App = () => {
   const navigate = useNavigate();
   const serverUrl = 'http://localhost:5000';
+  const clientUrl = 'http://localhost:3000';
   
-  const sendDataToServerAndMovePage = async (url, {id, title, image, description, price}) => {
+  const sendDataToServerAndMovePage = async (endpoint, {id, title, image, description, price, count = 0}) => {
     console.log('send data to server')
-    const productInfoUrl = `${serverUrl}/api/product-info`;
-    
+    const url = `${serverUrl}/api/${endpoint}`;
+    const locationUrl = window.location.href;
+    const productInfoUrl = `${clientUrl}/product-info`;
+  
     try {
-      const response = await axios.post(productInfoUrl, { title, id, image, description, price });
+      const response = await axios.post(url, { title, id, image, description, price, count });
     
-      if(url === '') return window.location.reload();
-      return movePage(url);
+      if(locationUrl === productInfoUrl) return window.location.reload();
+      return movePage(endpoint);
     } catch(err) {
       console.log('Failed send data to server!'); 
     }
