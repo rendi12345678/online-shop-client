@@ -42,7 +42,11 @@
 }
 
 .product-info h3 {
+  font-family: Times New Roman, Sans-Serif;
+  font-size: var(--h3-size);
   color: var(--blue-color);
+  font-style: italic;
+  letter-spacing: .15rem;
 }
 
 .product-info .buttons {

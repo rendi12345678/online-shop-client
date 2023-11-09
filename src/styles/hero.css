@@ -46,8 +46,11 @@
 }
 
 .info h3 span {
+  font-family: Times New Roman, Sans-Serif;
   font-size: var(--h3-size);
   color: var(--blue-color);
+  letter-spacing: .15rem;
+  font-style: italic;
 }
 
 .info .buttons {

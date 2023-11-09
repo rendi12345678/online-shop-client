@@ -38,7 +38,10 @@
 .card-info .price {
   font-size: calc(var(--paragraph-size) + .2rem);
   color: var(--blue-color);
-  font-weight: 600;
+  font-weight: bold;
+  font-style: italic;
+  font-family: Times New Roman, Sans-Serif;
+  letter-spacing: .15rem;
 }
 
 .categories .selected {
