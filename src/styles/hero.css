@@ -71,11 +71,13 @@
 }
 
 @media (width <= 76.8rem) {
-  .info {
-    order: 2;
-  }
-
   .hero-container .hero-image {
     justify-content: center;
+  }
+}
+
+@media (width <= 40.8rem) {
+  .info {
+    order: 2;
   }
 }
