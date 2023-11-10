@@ -1,0 +1,113 @@
+/* Product */
+.product {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  width: 100%;  
+  margin: 5.5rem 0;
+  box-sizing: border-box;
+  padding: 4rem;
+  gap: 4rem;
+}
+
+/* Product images */
+.product-images {
+  display: grid;
+  grid-template-columns: auto 2fr;
+  justify-items: center;
+  gap: 4rem;
+  align-items: center;
+}
+
+.main-image {
+  width: 75%;
+  order: 2;
+}
+
+.other-images {
+  display: grid;
+  gap: 4rem;
+  width: 4.5rem;
+  box-sizing: border-box;
+  order: 1;
+}
+
+.other-images img {
+  width: 100%;
+}
+
+/* Product info */
+.product-info {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  box-sizing: border-box;  
+}
+
+.product-info h3 {
+  font-family: arial, Sans-Serif;
+  font-size: var(--h3-size);
+  color: var(--blue-color);
+  letter-spacing: .1rem;
+}
+
+.product-info .buttons {
+  display: grid;
+  gap: 2rem;
+  grid-auto-flow: column;
+  box-sizing: border-box;
+  margin-top: 2rem;
+  justify-items: start;
+}
+
+.product-info .buttons .counter {
+  display: flex;
+  align-items: baseline;
+  background-color: #eee;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.product-info .buttons button {
+  border: 0;
+  padding: 1rem 2.2rem;
+  box-sizing: border-box;
+  font-size: var(--paragraph-size);
+  transition: 300ms;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+.product-info .buttons .increment, 
+.product-info .buttons .decrement {
+  font-size: var(--paragraph-size);
+  color: #bbb;
+}
+
+.product-info .buttons .count {
+  font-size: var(--paragraph-size);
+  color: #555;
+  font-weight: bold;
+}
+
+.product-info .buttons .add-to-cart-btn {
+  background-color: var(--blue-color);
+  color: #fff;
+}
+
+/* You might also like */
+.you-might-also-like {
+  display: grid;
+  width: 100%;
+  padding: 0 4rem;
+  box-sizing: border-box;
+}
+
+.you-might-also-like .card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  column-gap: 2rem;
+  align-items: start;
+  row-gap: 4rem;
+  box-sizing: border-box;
+  margin-top: 2rem;
+}

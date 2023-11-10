@@ -1,0 +1,95 @@
+:root {
+  --paragraph-size: clamp(1.4rem, 1.6vw, 1.6rem);
+  --paragraph-size2: clamp(1.4rem, 1.6vw, 1.6rem);
+  --h2-size: calc(var(--h1-size) - .8rem);
+  --h1-size: calc(var(--paragraph-size) * 2.8);
+  --h3-size: calc(var(--h2-size) - .8rem);
+  --h4-size: calc(var(--h3-size) - .8rem);
+  font-size: 62.5%;
+  --navbar-title-size: var(--h3-size);
+  --blue-color: #0047AB;
+}
+
+body {
+  background: #fff;
+  text-size-adjust: none;
+}
+
+.App {
+  font-family: helvetica, Sans-Serif;
+  max-width: 800px;
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  margin: auto;
+  height: auto;
+}
+
+h1 {
+  font-size: var(--h1-size);
+  line-height: 1.1;
+  margin-bottom: .5rem;
+  width: fit-content;
+  font-weight: bold;
+  color: #333;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: var(--h2-size);
+  line-height: 1.1;
+  margin-bottom: .5rem;
+  font-weight: bold;
+  color: #444;
+}
+
+h3 {
+  font-size: var(--h3-size);
+  margin-bottom: .5rem;
+  line-height: 1.1;
+  font-weight: bold;
+  color: #555;
+}
+
+h4 {
+  font-size: var(--h4-size);
+  margin-bottom: .0rem;
+  line-height: 1.5;
+  color: rgba(0,0,0,.4);
+  font-weight: 600;
+}
+
+p {
+  margin-bottom: .5rem;
+  font-size: var(--paragraph-size);
+  line-height: 1.5;
+  box-sizing: border-box;
+  max-width: 50ch;
+  color: #777;
+}
+
+.loading {
+  padding: 4rem 4rem 0 4rem;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  grid-column: 1 / -1;
+}
+
+.loading.dua {
+  padding: 0rem;  
+}
+
+.error-msg {
+  padding: 4rem 4rem 0 4rem;
+  text-align: center;
+  align-self: center;
+  width: 100%;
+  box-sizing: border-box;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+}
+
+.error-msg.dua {
+  padding: 0;
+}
