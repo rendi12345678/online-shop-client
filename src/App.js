@@ -1,4 +1,4 @@
-import React, {useEffect, useState, createContext, useReducer} from 'react';
+import React, {createContext} from 'react';
 import {Route, Routes, useNavigate} from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
