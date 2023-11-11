@@ -76,7 +76,7 @@
   }
 }
 
-@media (width <= 40.8rem) {
+@media (width <= 50.8rem) {
   .info {
     order: 2;
   }
