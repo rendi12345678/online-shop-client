@@ -12,6 +12,7 @@ import {
       getProducts,
       addProductsToState
    } from './utils/utils.js';
+import Cart from "./components/Cart";   
 
 export const FunctionsContext = createContext();
 
@@ -50,6 +51,7 @@ const App = () => {
       addProductsToState
     }}>
       <Navbar/>
+      <Cart/>
       <Routes>
         <Route path="/"
                exact

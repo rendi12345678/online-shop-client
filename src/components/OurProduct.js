@@ -183,8 +183,8 @@ const OurProduct = () => {
         }}>
         </figure>
         <div className="card-info">
-          <h4 className="title">{title}</h4>
-          <h4 className="price">Rp {price}</h4>
+          <h5 className="title">{title}</h5>
+          <p className="price">Rp {price}</p>
         </div>
       </div>
     );
@@ -197,15 +197,15 @@ const OurProduct = () => {
   return (
     <section className="our-product">
       <div className="categories">
-        <h4 className="new-products selected"
+        <h5 className="new-products selected"
             ref={newProductsRef}
-            onClick={() => addProducts('new-products')}>New Products</h4>
-        <h4 className="onsale" 
+            onClick={() => addProducts('new-products')}>New Products</h5>
+        <h5 className="onsale" 
             ref={onsaleRef}  
-            onClick={() => addProducts('onsale')}>Onsale</h4>
-        <h4 className="feature-products"
+            onClick={() => addProducts('onsale')}>Onsale</h5>
+        <h5 className="feature-products"
             ref={featureProductsRef}
-            onClick={() => addProducts('feature-products')}>Feature Products</h4>
+            onClick={() => addProducts('feature-products')}>Feature Products</h5>
       </div>
       <div className="card-list" ref={cardListRef}>
         {

@@ -20,7 +20,7 @@
   align-content: center;
 }
 
-.info button {
+.hero-container .info button {
   border: 0;
   width: fit-content;
   background-color: var(--blue-color);
@@ -33,12 +33,12 @@
   font-weight: bold;
 }
 
-.info button:hover {
+.hero-container .info button:hover {
   filter: brightness(90%);
 }
 
 
-.info p {
+.hero-container .info p {
   margin-bottom: .5rem;
   font-size: var(--paragraph-size);
   line-height: 1.5;
@@ -46,7 +46,7 @@
   color: #777;
 }
 
-.info h3 span {
+.hero-container .info h3 span {
   font-family: arial, Sans-Serif;
   font-size: var(--h3-size);
   color: var(--blue-color);
@@ -54,7 +54,7 @@
   font-weight: bold;
 }
 
-.info .buttons {
+.hero-container .info .buttons {
   display: flex;
   column-gap: 2rem;
   margin-top: 2rem;
