@@ -85,8 +85,8 @@
 
 .product-info .buttons .count {
   font-size: var(--paragraph-size);
-  color: #555;
   font-weight: bold;
+  color: #565656;
 }
 
 .product-info .buttons .add-to-cart-btn {

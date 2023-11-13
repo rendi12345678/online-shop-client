@@ -25,7 +25,7 @@ const handleLinkClick = () => {
 return (
 <header id="navbar">
   <div className="nav-container">
-  <h2>online<span>Shop</span></h2>
+  <h3>online<span>Shop</span></h3>
   <nav>
     <ul ref={navRef}>
       <li>
