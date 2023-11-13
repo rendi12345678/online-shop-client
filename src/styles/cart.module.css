@@ -13,8 +13,11 @@
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   width: 100%;
+  gap: 4rem;
+  box-sizing: border-box;
   max-width: 80rem;
   margin: auto;
+  padding: 0 4rem;
 }
 
 .info {
@@ -32,7 +35,7 @@
   color: var(--blue-color);
   font-size: calc(var(--paragraph-size) - 0.4rem);
   font-weight: bold;
-  letter-spacing: .05rem;
+  letter-spacing: 0.05rem;
 }
 
 .cart-title {
@@ -44,7 +47,6 @@
 .cart-list {
   width: 100%;
   margin: auto;
-  padding: 0 4rem;
   display: grid;
   box-sizing: border-box;
   gap: 2rem;
@@ -57,7 +59,6 @@
   box-sizing: border-box;
   align-items: center;
   width: 100%;
-  max-width: 40rem;
   gap: 2rem;
 }
 
@@ -140,7 +141,7 @@
   display: grid;
   align-items: center;
   height: 100%;
-  letter-spacing: .05rem;
+  letter-spacing: 0.05rem;
   margin-bottom: 0;
   font-family: arial, sans-serif;
 }
@@ -154,15 +155,26 @@
   box-sizing: border-box;
   margin-top: 2rem;
   padding: 2rem;
-  background: var(--blue-color);
+  background: #fff;
+  box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.25);
 }
 
 .prices p {
-  color: #fff;
+  color: #333;
+}
+
+@media (width <= 40.8rem) {
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (width <= 30rem) {
   .container-cart {
+    grid-template-columns: 1fr;
+  }
+
+  .wrapper {
     grid-template-columns: 1fr;
   }
 
