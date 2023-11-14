@@ -4,7 +4,7 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  height: clamp(4.5rem, 5vw, 5rem);
+  height: var(--navbar-height);
   background-color: #fff;
   box-sizing: border-box;
   color: var(--font-clr);
@@ -26,8 +26,8 @@ header .nav-container {
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  max-width: 80rem;
   padding: 0 4rem;
+  max-width: var(--container-max-width);
 }
 
 /* Hamburger Menu */

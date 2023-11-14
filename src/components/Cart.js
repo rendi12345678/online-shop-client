@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer, useRef } from "react";
 import cartStyles from "../styles/cart.module.css";
 
 const initialState = {
@@ -24,13 +24,22 @@ const reducer = (state, action) => {
   }
 };
 
-function Cart() {
+function Cart({display}) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { count } = state;
+  const containerCartRef = useRef();
+
+  const cartToggle = () => {
+    display ? containerCartRef.current.style.display = "block" : containerCartRef.current.style.display = "none";
+  }
+
+  useEffect(() => {
+    cartToggle();
+  }, [display])
 
   return (
     <>
-      <div className={cartStyles["container-cart"]}>
+      <div className={cartStyles["container-cart"]} ref={containerCartRef}>
         <main className={cartStyles.wrapper}>
           <section className={cartStyles["cart-list"]}>
             <h3 className={cartStyles["cart-title"]}>Shopping Cart</h3>
@@ -120,11 +129,15 @@ function Cart() {
             </div>
           </section>
           <section className={cartStyles["summary"]}>
-            <h3>Summary</h3>
             <div className={cartStyles.prices}>
-              <p>Sub Total : Rp 10.000.000</p>
-              <p>Ongkir : Rp 20.000</p>
-              <p>Total : Rp 10.020.000</p>
+              <h4>Summary</h4>
+              <div className={cartStyles.cost}>
+                <p>Sub total <span>Rp 10.000.000</span></p>
+                <p>Ongkir <span>Rp 20.000</span></p>
+                <div></div>
+                <p className={cartStyles.total}>Total <span>Rp 10.020.000</span></p>
+              </div>
+              <button className={cartStyles.checkout}>Checkout</button>
             </div>
           </section>
         </main>

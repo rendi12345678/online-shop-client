@@ -1,15 +1,16 @@
 .hero-section {
   width: 100svw;
-  margin: 5.5rem calc(-50svw - -50%);
+  margin: var(--navbar-height) calc(-50svw - -50%);
   background-color: #eee;
   box-sizing: border-box;
 }
 
 .hero-section .hero-container {
   display: flex;
-  max-width: 80rem;
   padding: 4rem;
+  max-width: var(--container-max-width);
   box-sizing: border-box;
+  justify-content: space-between;
   margin: auto;
   gap: 4rem;
 }
@@ -91,7 +92,7 @@
   }
 
   .hero-image img {
-    width: max(34rem, 10rem);
+    width: max(32rem, 10rem);
   }
 
   .hero-section .hero-container .info {

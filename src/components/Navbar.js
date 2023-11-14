@@ -1,14 +1,15 @@
 import React, {useRef, useState, useEffect} from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Cart from "./Cart";
 import { HashLink } from 'react-router-hash-link';
 
 const Navbar = () => {
 const navRef = useRef();
 const [isChecked, setIsChecked] = useState(false);
+const [display, setDisplay] = useState(false);
 
 const navToggle = value => {
   const currentClassName = navRef.current.className;
-  navRef.current.className = `{currentClassName} ${value}`;
+  navRef.current.className = `${currentClassName} ${value}`;
 }
   
 const handleCheckboxChange = e => {
@@ -21,8 +22,14 @@ const handleLinkClick = () => {
   setIsChecked(false); 
   navToggle('');
 }
-  
+
+const handleCartClick = () => {
+  const displayToggle = !display; 
+  setDisplay(displayToggle);
+}
+
 return (
+  <>
 <header id="navbar">
   <div className="nav-container">
   <h3>online<span>Shop</span></h3>
@@ -38,7 +45,7 @@ return (
       <HashLink smooth to="/#project-section" onClick={handleLinkClick}>Products</HashLink>
       </li>
       <li>
-      <HashLink smooth to="/#contact-section" onClick={handleLinkClick}>Cart <span>{0}</span></HashLink>
+      <HashLink onClick={handleCartClick}>Cart <span>{0}</span></HashLink>
       </li>
     </ul>
   </nav>
@@ -51,7 +58,9 @@ return (
       <span></span>
     </div>
   </div>
+  <Cart display={display}/>
 </header>
+</>
 );
 }
 

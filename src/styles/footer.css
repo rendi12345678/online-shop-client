@@ -1,7 +1,7 @@
 .footer {
   width: 100svw;
   margin: 0 calc(-50svw - -50%); 
-  margin-top: 5.5rem;
+  margin-top: var(--navbar-height);
   background-color: #333;
   box-sizing: border-box;
 }

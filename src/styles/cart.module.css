@@ -2,20 +2,21 @@
   position: fixed;
   top: 0;
   left: 0;
+  display: none;
   right: 0;
   bottom: 0;
   background-color: #fff;
   padding: 4rem 0;
-  margin-top: clamp(4.5rem, 5vw, 5rem);
+  margin-top: var(--navbar-height);
 }
 
 .wrapper {
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
+  grid-template-columns: 1.4fr 1fr;
   width: 100%;
   gap: 4rem;
   box-sizing: border-box;
-  max-width: 80rem;
+  max-width: var(--container-max-width);
   margin: auto;
   padding: 0 4rem;
 }
@@ -28,12 +29,13 @@
 .container-cart .cart .info h4 {
   color: rgba(0, 0, 0, 0.55);
   font-size: calc(var(--h4-size) - 0.4rem);
+  margin-bottom: .2rem;
 }
 
 .cart .info p:not(.counter p) {
   font-family: arial, sans-serif;
   color: var(--blue-color);
-  font-size: calc(var(--paragraph-size) - 0.4rem);
+  font-size: calc(var(--paragraph-size) - .25rem);
   font-weight: bold;
   letter-spacing: 0.05rem;
 }
@@ -151,6 +153,41 @@
   width: 100%;
 }
 
+.cost {
+  margin: 2rem 0;
+  box-sizing: border-box;
+}
+
+.cost div {
+  height: .1rem;
+  width: 100%;
+  background-color: rgba(0,0,0,.25);
+  box-sizing: border-box;
+  margin: 1rem 0;
+}
+
+.summary h4 {
+  margin-bottom: .5rem;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+.summary p {
+  font-size: calc(var(--paragraph-size) - 0.2rem);
+  font-weight: 500;
+  max-width: 100%;
+  box-sizing: border-box;
+  line-height: 1.2;
+  color: #666;
+  display: flex;
+  justify-content: space-between;
+}
+
+.summary p span {
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
 .summary .prices {
   box-sizing: border-box;
   margin-top: 2rem;
@@ -163,7 +200,24 @@
   color: #333;
 }
 
-@media (width <= 40.8rem) {
+.summary .total {
+  font-size: calc(var(--paragraph-size));
+  font-weight: bold;
+}
+
+.checkout {
+  border: 0;
+  width: fit-content;
+  background-color: var(--blue-color);
+  color: #fff;
+  padding: .8rem 1.2rem;
+  box-sizing: border-box;
+  font-size: calc(var(--paragraph-size) - 0.2rem);
+  transition: 300ms;
+  font-weight: bold;
+}
+
+@media (width <= 38rem) {
   .wrapper {
     grid-template-columns: 1fr;
   }
