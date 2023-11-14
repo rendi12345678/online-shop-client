@@ -163,7 +163,7 @@
   color: #333;
 }
 
-@media (width <= 40.8rem) {
+@media (width <= 4D0.8rem) {
   .wrapper {
     grid-template-columns: 1fr;
   }

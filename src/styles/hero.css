@@ -43,7 +43,7 @@
   font-size: var(--paragraph-size);
   line-height: 1.5;
   max-width: 42ch;
-  color: #b33939;
+  color: #777;
 }
 
 .hero-container .info h3 span {
