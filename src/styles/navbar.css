@@ -13,8 +13,9 @@ header {
 }
 
 header .nav-container {
-  display: flex;
+  display: grid;
   width: 100%;
+  grid-auto-columns: auto;
   position: relative;
   top: 0;
   right: 0;
@@ -23,8 +24,9 @@ header .nav-container {
   left: 0;
   bottom: 0;
   background: #fff;
-  justify-content: space-between;
   align-items: center;
+  grid-template-columns: auto 1fr auto;
+  gap: 4rem;
   box-sizing: border-box;
   padding: 0 4rem;
   max-width: var(--container-max-width);
@@ -88,6 +90,7 @@ header h3 {
   line-height: 1.1;
   margin: 0;
   color: #555;
+  width: fit-content;
   font-weight: bold;
 }
 
@@ -104,11 +107,18 @@ nav ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: clamp(20rem, 30vw, 30rem);
+  width: clamp(18rem, 22vw, 22rem);
 }
 
 ul li {
   list-style: none;
+}
+
+.cart-icon {
+  border: 0;
+  height: 2.5rem;
+  width: 2.5rem;
+  background: url(../../public/img/shopping-cart.png) center / 2rem no-repeat;
 }
 
 ul li a {
@@ -133,8 +143,10 @@ ul li a:active {
 }
 
 @media (width <= 768px) {
-  .nav-container {
-    padding: 0 2rem;
+  header .nav-container {
+    grid-auto-flow: column;
+    box-sizing: border-box;
+    gap: 2rem;
   }
   
   nav ul {

@@ -1,8 +1,6 @@
 import React, {useEffect, useReducer, useContext} from 'react';
 import './../styles/hero.css';
 import './../styles/reset.css';
-import heroImage from './../img/asus-zenbook.png';
-import axios from 'axios';
 import { FunctionsContext } from '../App.js';
 
 const initialState = {

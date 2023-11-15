@@ -92,7 +92,8 @@
   }
 
   .hero-image img {
-    width: max(32rem, 10rem);
+    max-width: 32rem;
+    min-width: 10rem;
   }
 
   .hero-section .hero-container .info {
