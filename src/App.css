@@ -27,6 +27,18 @@ body {
   height: auto;
 }
 
+button {
+  transition: 300ms;
+}
+
+button:not(.counter button):hover {
+  filter: brightness(85%);
+}
+
+button:active {
+  transform: scale(.95);
+}
+
 h1 {
   font-size: var(--h1-size);
   line-height: 1.1;

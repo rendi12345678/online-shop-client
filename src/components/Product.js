@@ -1,15 +1,17 @@
 import React, { useReducer, useEffect, useContext } from "react";
 import axios from "axios";
 import { FunctionsContext } from "../App.js";
+import Navbar from "./Navbar.js";
 
 const initialState = {
-  count: 0,
+  count: 1,
   products: [],
   error: "",
   loading: true,
   productInfo: [],
   error2: "",
   infoLoading: true,
+  productItems: JSON.parse(window.localStorage.getItem("product-items")) || [],
 };
 
 const reducer = (state, action) => {
@@ -22,13 +24,27 @@ const reducer = (state, action) => {
     case "decrement":
       return {
         ...state,
-        count: state.count - 1 < 0 ? 0 : state.count - 1,
+        count: state.count - 1 < 1 ? 1 : state.count - 1,
       };
     case "set-products":
       return {
         ...state,
         products: action.payload,
       };
+    case "set-product-items":
+      const existingItems = state.productItems.find(
+        (item) => item.id === action.payload.id
+      );
+
+      const updatedProductItems = existingItems
+        ? state.productItems.map((item, index) =>
+            item.id === action.payload.id
+              ? { ...item, count: action.payload.count }
+              : item
+          )
+        : [...state.productItems, action.payload];
+
+      return { ...state, productItems: updatedProductItems };
     case "set-product-info":
       return {
         ...state,
@@ -65,6 +81,7 @@ const Product = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     count,
+    productItems,
     products = [],
     productInfo = [],
     loading,
@@ -72,7 +89,7 @@ const Product = () => {
     infoLoading,
     error2,
   } = state;
-  const { sendDataToServerAndMovePage, getImage, serverUrl } =
+  const { sendDataToServerAndMovePage, getImage, serverUrl, setCartProducts } =
     useContext(FunctionsContext);
 
   const addDataToState = (url, action) => {
@@ -122,12 +139,36 @@ const Product = () => {
     console.log("render");
   };
 
+  const addProductToCart = ({
+    image,
+    title,
+    price,
+    id,
+    description,
+    count,
+  }) => {
+    console.log(title);
+    dispatch({
+      type: "set-product-items",
+      payload: {
+        image,
+        title,
+        price,
+        id,
+        description,
+        count,
+      },
+    });
+  };
+
   useEffect(() => {
     fetchData();
-
-    console.log("render useEffect");
-    console.log(loading);
   }, []);
+
+  useEffect(() => {
+    setCartProducts(productItems);
+    console.log(productItems);
+  }, [productItems]);
 
   return (
     <>
@@ -171,7 +212,7 @@ const Product = () => {
                   <button
                     className="add-to-cart-btn"
                     onClick={() =>
-                      sendDataToServerAndMovePage("cart", {
+                      addProductToCart({
                         image,
                         title,
                         price,

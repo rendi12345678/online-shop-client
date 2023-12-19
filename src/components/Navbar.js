@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Cart from "./Cart";
 import { HashLink } from "react-router-hash-link";
 
-const Navbar = () => {
+const Navbar = ({count}) => {
   const navRef = useRef();
   const [isChecked, setIsChecked] = useState(false);
   const [display, setDisplay] = useState(false);
@@ -25,7 +25,6 @@ const Navbar = () => {
   const handleCartClick = () => {
     setDisplay(!display);
   };
-
   return (
     <>
       <header id="navbar">
@@ -56,7 +55,9 @@ const Navbar = () => {
               </li>
             </ul>
           </nav>
-          <button className="cart-icon" onClick={handleCartClick}></button>
+          <button className="cart-icon" onClick={handleCartClick}>
+            <span>{count}</span>
+          </button>
           <div className="menu-toggle">
             <input
               type="checkbox"

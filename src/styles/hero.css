@@ -7,7 +7,7 @@
 
 .hero-section .hero-container {
   display: flex;
-  padding: 4rem;
+  padding: clamp(2rem, 4svw, 4rem);
   max-width: var(--container-max-width);
   box-sizing: border-box;
   justify-content: space-between;

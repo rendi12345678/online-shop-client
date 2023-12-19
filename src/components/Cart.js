@@ -33,6 +33,41 @@ function Cart({display}) {
     display ? containerCartRef.current.style.display = "block" : containerCartRef.current.style.display = "none";
   }
 
+  const formatMessage = (data) => {
+    return `Halo [Nama Client],
+
+    Terima kasih telah memesan buku dengan kami. Berikut adalah detail pesanan Anda:
+    
+    Nama: [Nama Client]
+    Email: [Alamat Email]
+    Alamat Pengiriman: [Alamat Pengiriman]
+    
+    Detail Pesanan:
+    1. Buku "Atomic Habits"
+       - Jumlah: 3 buah
+       - Harga: 60 ribu per buku
+    
+    2. Buku "Filosofi Teras"
+       - Jumlah: 5 buah
+       - Harga: 70 ribu per buku
+    
+    Total Pembayaran: [Total Harga]
+    
+    Mohon segera konfirmasikan pesanan Anda dan informasikan metode pembayaran yang Anda pilih. Setelah kami menerima pembayaran, pesanan akan segera diproses.
+    
+    Terima kasih atas kepercayaan Anda kepada kami.
+    
+    Salam,
+    [Your Company Name/Toko]
+    `
+  }
+
+  const handleCheckout = () => {
+    const message = formatMessage();
+
+    window.open(`http://wa.me/62881027057536?text=${encodeURIComponent(message)}`);
+  }
+
   useEffect(() => {
     cartToggle();
   }, [display])
@@ -137,7 +172,7 @@ function Cart({display}) {
                 <div></div>
                 <p className={cartStyles.total}>Total <span>Rp 10.020.000</span></p>
               </div>
-              <button className={cartStyles.checkout}>Checkout</button>
+              <button className={cartStyles.checkout} onClick={handleCheckout}>Checkout</button>
             </div>
           </section>
         </main>
