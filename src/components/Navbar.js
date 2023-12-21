@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Cart from "./Cart";
 import { HashLink } from "react-router-hash-link";
 
-const Navbar = ({count}) => {
+const Navbar = ({count, productItems}) => {
   const navRef = useRef();
   const [isChecked, setIsChecked] = useState(false);
   const [display, setDisplay] = useState(false);
@@ -30,17 +30,17 @@ const Navbar = ({count}) => {
       <header id="navbar">
         <div className="nav-container">
           <h3>
-            online<span>Shop</span>
+            Ilham<span>Store</span>
           </h3>
           <nav>
             <ul ref={navRef}>
               <li>
-                <HashLink smooth to="/#hero-section" onClick={handleLinkClick}>
+                <HashLink smooth to="/" onClick={handleLinkClick}>
                   Home
                 </HashLink>
               </li>
               <li>
-                <HashLink smooth to="/#about-section" onClick={handleLinkClick}>
+                <HashLink smooth to="/" onClick={handleLinkClick}>
                   About
                 </HashLink>
               </li>
@@ -70,7 +70,7 @@ const Navbar = ({count}) => {
           </div>
         </div>
       </header>
-      <Cart display={display} />
+      <Cart display={display} productItems={productItems}/>
     </>
   );
 };

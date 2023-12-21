@@ -3,94 +3,21 @@ import axios from "axios";
 import { FunctionsContext } from "../App.js";
 import Navbar from "./Navbar.js";
 
-const initialState = {
-  count: 1,
-  products: [],
-  error: "",
-  loading: true,
-  productInfo: [],
-  error2: "",
-  infoLoading: true,
-  productItems: JSON.parse(window.localStorage.getItem("product-items")) || [],
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "increment":
-      return {
-        ...state,
-        count: state.count + 1,
-      };
-    case "decrement":
-      return {
-        ...state,
-        count: state.count - 1 < 1 ? 1 : state.count - 1,
-      };
-    case "set-products":
-      return {
-        ...state,
-        products: action.payload,
-      };
-    case "set-product-items":
-      const existingItems = state.productItems.find(
-        (item) => item.id === action.payload.id
-      );
-
-      const updatedProductItems = existingItems
-        ? state.productItems.map((item, index) =>
-            item.id === action.payload.id
-              ? { ...item, count: action.payload.count }
-              : item
-          )
-        : [...state.productItems, action.payload];
-
-      return { ...state, productItems: updatedProductItems };
-    case "set-product-info":
-      return {
-        ...state,
-        productInfo: action.payload,
-      };
-    case "set-loading":
-      return {
-        ...state,
-        loading: action.loadingValue,
-      };
-    case "set-info-loading":
-      return {
-        ...state,
-        infoLoading: action.loadingValue,
-      };
-    case "set-error":
-      return {
-        ...state,
-        error: action.errorData,
-      };
-    case "set-error2":
-      return {
-        ...state,
-        error2: action.errorData,
-      };
-    default:
-      return {
-        state,
-      };
-  }
-};
-
 const Product = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
   const {
+    sendDataToServerAndMovePage,
+    getImage,
+    serverUrl,
     count,
     productItems,
-    products = [],
-    productInfo = [],
+    products,
+    productInfo,
     loading,
     error,
     infoLoading,
     error2,
-  } = state;
-  const { sendDataToServerAndMovePage, getImage, serverUrl, setCartProducts } =
-    useContext(FunctionsContext);
+    dispatch,
+  } = useContext(FunctionsContext);
 
   const addDataToState = (url, action) => {
     axios
@@ -164,11 +91,6 @@ const Product = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  useEffect(() => {
-    setCartProducts(productItems);
-    console.log(productItems);
-  }, [productItems]);
 
   return (
     <>

@@ -1,76 +1,53 @@
-import React, { useEffect, useReducer, useRef } from "react";
+import React, {
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+  useContext,
+} from "react";
 import cartStyles from "../styles/cart.module.css";
+import { FunctionsContext } from "../App";
 
-const initialState = {
-  count: 0,
-};
+function Cart({ display, productItems: newProductItems }) {
+  const { productItems, dispatch, handleCheckout, name, email, location, isButtonDisabled, handleInputChange, cartToggle, containerCartRef, display } =
+    useContext(FunctionsContext);
+  const [errors, setErrors] = useState({
+    errorName: "",
+    errorEmail: "",
+    errorLocation: "",
+  });
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "increment":
-      return {
-        ...state,
-        count: state.count + 1,
-      };
+  const { errorName, errorEmail, errorLocation } = errors;
 
-    case "decrement":
-      return {
-        ...state,
-        count: state.count - 1 < 0 ? 0 : state.count - 1,
-      };
+  const handleRemove = (item) => {
+    // setproductItems((prevProducts) => ({
+    //   ...prevProducts,
+    //   items: prevProducts.items.filter((prevItem) => prevItem.id !== item.id),
+    // }));
+  };
 
-    default:
-      return state;
-  }
-};
+  const handleIncrement = (item) => {
+    // setproductItems((prevProducts) =>
+    //   prevProducts.items.map((prevItem) => {
+    //     return prevItem.id === item.id
+    //       ? { ...prevItem, count: prevItem.count + 1 }
+    //       : prevItem;
+    //   })
+    // );
+  };
 
-function Cart({display}) {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const { count } = state;
-  const containerCartRef = useRef();
-
-  const cartToggle = () => {
-    display ? containerCartRef.current.style.display = "block" : containerCartRef.current.style.display = "none";
-  }
-
-  const formatMessage = (data) => {
-    return `Halo [Nama Client],
-
-    Terima kasih telah memesan buku dengan kami. Berikut adalah detail pesanan Anda:
-    
-    Nama: [Nama Client]
-    Email: [Alamat Email]
-    Alamat Pengiriman: [Alamat Pengiriman]
-    
-    Detail Pesanan:
-    1. Buku "Atomic Habits"
-       - Jumlah: 3 buah
-       - Harga: 60 ribu per buku
-    
-    2. Buku "Filosofi Teras"
-       - Jumlah: 5 buah
-       - Harga: 70 ribu per buku
-    
-    Total Pembayaran: [Total Harga]
-    
-    Mohon segera konfirmasikan pesanan Anda dan informasikan metode pembayaran yang Anda pilih. Setelah kami menerima pembayaran, pesanan akan segera diproses.
-    
-    Terima kasih atas kepercayaan Anda kepada kami.
-    
-    Salam,
-    [Your Company Name/Toko]
-    `
-  }
-
-  const handleCheckout = () => {
-    const message = formatMessage();
-
-    window.open(`http://wa.me/62881027057536?text=${encodeURIComponent(message)}`);
-  }
-
-  useEffect(() => {
-    cartToggle();
-  }, [display])
+  const handleDecrement = (item) => {
+    // setproductItems((prevProducts) =>
+    //   prevProducts.items.map((prevItem) => {
+    //     return prevItem.id === item.id
+    //       ? {
+    //           ...prevItem,
+    //           count: prevItem.count - 1 < 1 ? 1 : prevItem.count - 1,
+    //         }
+    //       : prevItem;
+    //   })
+    // );
+  };
 
   return (
     <>
@@ -78,101 +55,119 @@ function Cart({display}) {
         <main className={cartStyles.wrapper}>
           <section className={cartStyles["cart-list"]}>
             <h3 className={cartStyles["cart-title"]}>Shopping Cart</h3>
-            <div className={cartStyles["cart"]}>
-              <figure className={cartStyles["cart-image"]}>
-                <img src="/img/asus-zenbook.png" alt="Laptop" />
-              </figure>
-              <div className={cartStyles["info"]}>
-                <h4 className="product-title">Asus Asus Zenbook</h4>
-                <p className="price">Rp 3.000.000</p>
-                <div className={cartStyles.counter}>
-                  <button
-                    className={`${cartStyles.decrement} ${cartStyles.btn}`}
-                    onClick={() => dispatch({ type: "decrement" })}
-                  >
-                    -
-                  </button>
-                  <p className={cartStyles.count}>{count}</p>
-                  <button
-                    className={`${cartStyles.decrement} ${cartStyles.btn}`}
-                    onClick={() => dispatch({ type: "increment" })}
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-              <button className={cartStyles["delete-product"]}>X</button>
-              <h4 className={cartStyles["product-total-price"]}>
-                Rp 6.000.000
-              </h4>
-            </div>
-            <div className={cartStyles["cart"]}>
-              <figure className={cartStyles["cart-image"]}>
-                <img src="/img/asus-zenbook.png" alt="Laptop" />
-              </figure>
-              <div className={cartStyles["info"]}>
-                <h4 className="product-title">Asus Asus Zenbook</h4>
-                <p className="price">Rp 3.000.000</p>
-                <div className={cartStyles.counter}>
-                  <button
-                    className={`${cartStyles.decrement} ${cartStyles.btn}`}
-                    onClick={() => dispatch({ type: "decrement" })}
-                  >
-                    -
-                  </button>
-                  <p className={cartStyles.count}>{count}</p>
-                  <button
-                    className={`${cartStyles.decrement} ${cartStyles.btn}`}
-                    onClick={() => dispatch({ type: "increment" })}
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-              <button className={cartStyles["delete-product"]}>X</button>
-              <h4 className={cartStyles["product-total-price"]}>
-                Rp 6.000.000
-              </h4>
-            </div>
-            <div className={cartStyles["cart"]}>
-              <figure className={cartStyles["cart-image"]}>
-                <img src="/img/asus-zenbook.png" alt="Laptop" />
-              </figure>
-              <div className={cartStyles["info"]}>
-                <h4 className="product-title">Asus Asus Zenbook</h4>
-                <p className="price">Rp 3.000.000</p>
-                <div className={cartStyles.counter}>
-                  <button
-                    className={`${cartStyles.decrement} ${cartStyles.btn}`}
-                    onClick={() => dispatch({ type: "decrement" })}
-                  >
-                    -
-                  </button>
-                  <p className={cartStyles.count}>{count}</p>
-                  <button
-                    className={`${cartStyles.decrement} ${cartStyles.btn}`}
-                    onClick={() => dispatch({ type: "increment" })}
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-              <button className={cartStyles["delete-product"]}>X</button>
-              <h4 className={cartStyles["product-total-price"]}>
-                Rp 6.000.000
-              </h4>
-            </div>
+            {productItems.items && productItems.items.length !== 0 ? (
+              productItems.items.map((item, index) => (
+                <>
+                  <div key={index} className={cartStyles["cart"]}>
+                    <figure className={cartStyles["cart-image"]}>
+                      <img src={`img/${item.image}`} alt="Laptop" />
+                    </figure>
+                    <div className={cartStyles["info"]}>
+                      <h4 className="product-title">{item.title}</h4>
+                      <p className="price">Rp {item.price}</p>
+                      <div className={cartStyles.counter}>
+                        <button
+                          className={`${cartStyles.decrement} ${cartStyles.btn}`}
+                          onClick={() => handleDecrement(item)}
+                        >
+                          -
+                        </button>
+                        <p className={cartStyles.count}>{item.count}</p>
+                        <button
+                          className={`${cartStyles.decrement} ${cartStyles.btn}`}
+                          onClick={() => handleIncrement(item)}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      className={cartStyles["delete-product"]}
+                      onClick={() => handleRemove(item)}
+                    >
+                      X
+                    </button>
+                    <h4 className={cartStyles["product-total-price"]}>
+                      Rp {item.price * item.count}
+                    </h4>
+                  </div>
+                </>
+              ))
+            ) : (
+              <p>Keranjang anda masih kosong!</p>
+            )}
           </section>
           <section className={cartStyles["summary"]}>
             <div className={cartStyles.prices}>
-              <h4>Summary</h4>
+              <h4>Pembayaran</h4>
               <div className={cartStyles.cost}>
-                <p>Sub total <span>Rp 10.000.000</span></p>
-                <p>Ongkir <span>Rp 20.000</span></p>
+                <form className={cartStyles["form"]}>
+                  <label htmlFor="name">
+                    Nama <br />
+                    <input
+                      type="text"
+                      name="name"
+                      id="name"
+                      value={name}
+                      onInput={handleInputChange}
+                      onChange={handleInputChange}
+                    />
+                    <br /> <p>{errorName !== "" && errorName}</p>
+                  </label>
+                  <label htmlFor="email">
+                    Email <br />
+                    <input
+                      type="email"
+                      onInput={handleInputChange}
+                      name="email"
+                      id="email"
+                      pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                      value={email}
+                      onChange={handleInputChange}
+                    />
+                  </label>
+                  <label htmlFor="location">
+                    Alamat <br />
+                    <input
+                      type="location"
+                      onInput={handleInputChange}
+                      name="location"
+                      id="location"
+                      value={location}
+                      onChange={handleInputChange}
+                    />
+                  </label>
+                </form>
                 <div></div>
-                <p className={cartStyles.total}>Total <span>Rp 10.020.000</span></p>
+                <p className={cartStyles.total}>
+                  Total{" "}
+                  <span>
+                    Rp{" "}
+                    {productItems.items
+                      ? productItems.items.reduce(
+                          (acc, item) => acc + item.price * item.count,
+                          0
+                        )
+                      : 0}
+                  </span>
+                </p>
               </div>
-              <button className={cartStyles.checkout} onClick={handleCheckout}>Checkout</button>
+              <button
+                className={cartStyles.checkout}
+                disabled={isButtonDisabled}
+                style={{
+                  padding: "10px",
+                  backgroundColor: isButtonDisabled
+                    ? "#ccc"
+                    : "var(--blue-color)",
+                  color: isButtonDisabled ? "#666" : "#fff",
+                  cursor: isButtonDisabled ? "not-allowed" : "pointer",
+                  /* Add more styles as needed */
+                }}
+                onClick={handleCheckout}
+              >
+                Checkout
+              </button>
             </div>
           </section>
         </main>
