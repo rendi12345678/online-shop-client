@@ -16,6 +16,7 @@ const Product = () => {
     error,
     infoLoading,
     error2,
+    formatCurrency,
     dispatch,
   } = useContext(FunctionsContext);
 
@@ -113,7 +114,7 @@ const Product = () => {
               </div>
               <div className="product-info">
                 <h1>{title}</h1>
-                <h3>Rp {price}</h3>
+                <h3>{formatCurrency(price)}</h3>
                 <p>{description}</p>
                 <div className="buttons">
                   <div className="counter">
@@ -183,7 +184,7 @@ const Product = () => {
                 ></figure>
                 <div className="card-info">
                   <h5 className="title">{title}</h5>
-                  <p className="price">Rp {price}</p>
+                  <p className="price">{formatCurrency(price)}</p>
                 </div>
               </div>
             ))}

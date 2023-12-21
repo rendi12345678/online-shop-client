@@ -1,53 +1,26 @@
 import React, {
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
   useContext,
 } from "react";
 import cartStyles from "../styles/cart.module.css";
 import { FunctionsContext } from "../App";
 
-function Cart({ display, productItems: newProductItems }) {
-  const { productItems, dispatch, handleCheckout, name, email, location, isButtonDisabled, handleInputChange, cartToggle, containerCartRef, display } =
-    useContext(FunctionsContext);
-  const [errors, setErrors] = useState({
-    errorName: "",
-    errorEmail: "",
-    errorLocation: "",
-  });
+function Cart() {
+  const {
+    productItems,
+    handleCheckout,
+    name,
+    email,
+    location,
+    isButtonDisabled,
+    handleInputChange,
+    containerCartRef,
+    formatCurrency,
+    handleDecrement,
+    handleIncrement,
+    handleRemove
+  } = useContext(FunctionsContext);
 
-  const { errorName, errorEmail, errorLocation } = errors;
-
-  const handleRemove = (item) => {
-    // setproductItems((prevProducts) => ({
-    //   ...prevProducts,
-    //   items: prevProducts.items.filter((prevItem) => prevItem.id !== item.id),
-    // }));
-  };
-
-  const handleIncrement = (item) => {
-    // setproductItems((prevProducts) =>
-    //   prevProducts.items.map((prevItem) => {
-    //     return prevItem.id === item.id
-    //       ? { ...prevItem, count: prevItem.count + 1 }
-    //       : prevItem;
-    //   })
-    // );
-  };
-
-  const handleDecrement = (item) => {
-    // setproductItems((prevProducts) =>
-    //   prevProducts.items.map((prevItem) => {
-    //     return prevItem.id === item.id
-    //       ? {
-    //           ...prevItem,
-    //           count: prevItem.count - 1 < 1 ? 1 : prevItem.count - 1,
-    //         }
-    //       : prevItem;
-    //   })
-    // );
-  };
+  
 
   return (
     <>
@@ -55,7 +28,7 @@ function Cart({ display, productItems: newProductItems }) {
         <main className={cartStyles.wrapper}>
           <section className={cartStyles["cart-list"]}>
             <h3 className={cartStyles["cart-title"]}>Shopping Cart</h3>
-            {productItems.items && productItems.items.length !== 0 ? (
+            {productItems.items ? productItems.items.length !== 0 ? (
               productItems.items.map((item, index) => (
                 <>
                   <div key={index} className={cartStyles["cart"]}>
@@ -64,7 +37,9 @@ function Cart({ display, productItems: newProductItems }) {
                     </figure>
                     <div className={cartStyles["info"]}>
                       <h4 className="product-title">{item.title}</h4>
-                      <p className="price">Rp {item.price}</p>
+                      <p className="price">
+                        {formatCurrency(item.price)}
+                      </p>
                       <div className={cartStyles.counter}>
                         <button
                           className={`${cartStyles.decrement} ${cartStyles.btn}`}
@@ -88,14 +63,14 @@ function Cart({ display, productItems: newProductItems }) {
                       X
                     </button>
                     <h4 className={cartStyles["product-total-price"]}>
-                      Rp {item.price * item.count}
+                      {formatCurrency(item.price * item.count)}
                     </h4>
                   </div>
                 </>
               ))
             ) : (
               <p>Keranjang anda masih kosong!</p>
-            )}
+            ) : null}
           </section>
           <section className={cartStyles["summary"]}>
             <div className={cartStyles.prices}>
@@ -112,7 +87,7 @@ function Cart({ display, productItems: newProductItems }) {
                       onInput={handleInputChange}
                       onChange={handleInputChange}
                     />
-                    <br /> <p>{errorName !== "" && errorName}</p>
+                    <br /> 
                   </label>
                   <label htmlFor="email">
                     Email <br />
@@ -142,11 +117,12 @@ function Cart({ display, productItems: newProductItems }) {
                 <p className={cartStyles.total}>
                   Total{" "}
                   <span>
-                    Rp{" "}
                     {productItems.items
-                      ? productItems.items.reduce(
-                          (acc, item) => acc + item.price * item.count,
-                          0
+                      ? formatCurrency(
+                          productItems.items.reduce(
+                            (acc, item) => acc + item.price * item.count,
+                            0
+                          )
                         )
                       : 0}
                   </span>

@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Cart from "./Cart";
 import { HashLink } from "react-router-hash-link";
 
-const Navbar = ({count, productItems}) => {
+const Navbar = ({count, productItems, display, dispatch}) => {
   const navRef = useRef();
   const [isChecked, setIsChecked] = useState(false);
-  const [display, setDisplay] = useState(false);
 
   const navToggle = (value) => {
     navRef.current.className = value;
@@ -23,14 +22,15 @@ const Navbar = ({count, productItems}) => {
   };
 
   const handleCartClick = () => {
-    setDisplay(!display);
+    dispatch({type: "reset-user-detail", payload: {name: "", email: "", location: ""}})
+    dispatch({type: "set-display", payload: !display});
   };
   return (
     <>
       <header id="navbar">
         <div className="nav-container">
           <h3>
-            Ilham<span>Store</span>
+            Al <span>Store</span>
           </h3>
           <nav>
             <ul ref={navRef}>

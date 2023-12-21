@@ -1,8 +1,11 @@
 .hero-section {
   width: 100svw;
-  margin: var(--navbar-height) calc(-50svw - -50%);
-  background-color: #eee;
+  height: 100svh;
+  margin: 0 calc(-50svw - -50%);
+  background-color: #ffffff;
   box-sizing: border-box;
+  display: grid;
+  align-items: center;
 }
 
 .hero-section .hero-container {
@@ -92,7 +95,7 @@
   }
 
   .hero-image img {
-    max-width: 32rem;
+    max-width: 24rem;
     min-width: 10rem;
   }
 

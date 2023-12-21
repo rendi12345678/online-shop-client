@@ -42,7 +42,7 @@ button:active {
 h1 {
   font-size: var(--h1-size);
   line-height: 1.1;
-  margin-bottom: .5rem;
+  margin-bottom: 1rem;
   width: fit-content;
   font-weight: bold;
   color: #333;
@@ -52,7 +52,7 @@ h1 {
 h2 {
   font-size: var(--h2-size);
   line-height: 1.1;
-  margin-bottom: .5rem;
+  margin-bottom: 1rem;
   font-weight: bold;
   color: #444;
 }
@@ -82,7 +82,7 @@ h5 {
 }
 
 p {
-  margin-bottom: .5rem;
+  margin-bottom: 0;
   font-size: var(--paragraph-size);
   line-height: 1.5;
   box-sizing: border-box;

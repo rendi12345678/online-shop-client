@@ -66,8 +66,7 @@ const OurProduct = () => {
   const {
     sendDataToServerAndMovePage, 
     getImage, 
-    serverUrl,
-    getProducts,
+    formatCurrency,
     addProductsToState
   } = useContext(FunctionsContext);
   
@@ -184,7 +183,7 @@ const OurProduct = () => {
         </figure>
         <div className="card-info">
           <h5 className="title">{title}</h5>
-          <p className="price">Rp {price}</p>
+          <p className="price">{formatCurrency(price)}</p>
         </div>
       </div>
     );

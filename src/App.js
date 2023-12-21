@@ -20,6 +20,7 @@ const initialState = {
   loading: true,
   productInfo: [],
   error2: "",
+  display: false,
   infoLoading: true,
   productItems: JSON.parse(window.localStorage.getItem("product-items")) || {
     items: [],
@@ -39,14 +40,21 @@ const reducer = (state, action) => {
         ...state,
         count: state.count - 1 < 1 ? 1 : state.count - 1,
       };
+    case "reset-user-detail":
+      return {
+        ...state,
+        productItems: {
+          items: state.productItems.items,
+          userDetail: action.payload,
+        },
+      };
     case "set-form-values":
       console.log("form values", action.payload);
       return {
         ...state,
         formValues: {
-          name: action.payload.name,
-          email: action.payload.email,
-          location: action.payload.location,
+          ...state.formValues,
+          ...action.payload,
         },
       };
     case "set-products":
@@ -55,15 +63,12 @@ const reducer = (state, action) => {
         products: action.payload,
       };
     case "checkout":
+      console.log(action.payload, "payload");
       return {
         ...state,
         productItems: {
           items: state.productItems.items,
-          userDetail: {
-            name: action.payload.name,
-            email: action.payload.email,
-            location: action.payload.location,
-          },
+          userDetail: { ...state.productItems.userDetail, ...action.payload },
         },
       };
     case "set-product-items":
@@ -97,10 +102,55 @@ const reducer = (state, action) => {
           },
         };
       }
+    case "set-display":
+      return { ...state, display: action.payload };
+    case "set-button-is-disabled":
+      return { ...state, isButtonDisabled: action.payload };
     case "set-product-info":
       return {
         ...state,
         productInfo: action.payload,
+      };
+    case "update-increment-count":
+      const updatedIncrementCount = state.productItems.items.map((prevItem) => {
+        return prevItem.id === action.payload.id
+          ? { ...prevItem, count: prevItem.count + 1 }
+          : prevItem;
+      });
+      return {
+        ...state,
+        productItems: {
+          items: updatedIncrementCount,
+          userDetail: state.productItems.userDetail,
+        },
+      };
+    case "update-decrement-count":
+      const updatedDecrementCount = state.productItems.items.map((prevItem) => {
+        return prevItem.id === action.payload.id
+          ? {
+              ...prevItem,
+              count: prevItem.count - 1 < 1 ? 1 : prevItem.count - 1,
+            }
+          : prevItem;
+      });
+
+      return {
+        ...state,
+        productItems: {
+          items: updatedDecrementCount,
+          userDetail: state.productItems.userDetail,
+        },
+      };
+
+    case "remove-cart":
+      return {
+        ...state,
+        productItems: {
+          items: state.productItems.items.filter(
+            (prevItem) => prevItem.id !== action.payload.id
+          ),
+          userDetail: state.productItems.userDetail,
+        },
       };
     case "set-loading":
       return {
@@ -131,7 +181,7 @@ const reducer = (state, action) => {
 
 const App = () => {
   const navigate = useNavigate();
-  const serverUrl = "http://localhost:5000";
+  const serverUrl = "https://lovely-tan-dove.cyclic.app";
   const clientUrl = "http://localhost:3000";
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
@@ -139,17 +189,16 @@ const App = () => {
     productItems,
     products = [],
     productInfo = [],
+    formValues,
     loading,
-    name,
+    display,
     isButtonDisabled,
-    email,
-    location,
     error,
     infoLoading,
     error2,
   } = state;
   const containerCartRef = useRef();
-
+  const { name, email, location } = formValues;
 
   const sendDataToServerAndMovePage = async (
     endpoint,
@@ -176,18 +225,43 @@ const App = () => {
       : (containerCartRef.current.style.display = "none");
   };
 
+  const handleRemove = (item) => {
+    dispatch({ type: "remove-cart", payload: item });
+  };
+
+  const handleIncrement = (item) => {
+    dispatch({ type: "update-increment-count", payload: item });
+  };
+
+  const handleDecrement = (item) => {
+    dispatch({ type: "update-decrement-count", payload: item });
+  };
+
   const movePage = (url) => {
     navigate(url);
+  };
+
+  const formatCurrency = (amount, locale = "id-ID") => {
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(amount);
   };
 
   const handleInputChange = (e) => {
     dispatch({
       type: "set-form-values",
-      payload: { name: e.target.value },
+      payload: { [e.target.name]: e.target.value },
     });
 
-    if (name === "" || email === "" || location === "") return;
-    setIsButtonDisabled(false);
+    if (
+      formValues.name === "" ||
+      formValues.email === "" ||
+      formValues.location === ""
+    )
+      return;
+    dispatch({ type: "set-button-is-disabled", payload: false });
   };
 
   useEffect(() => {
@@ -196,24 +270,26 @@ const App = () => {
 
   const formatMessage = (data) => {
     console.log("data", data);
-    return `Halo ${data.userDetail.name},
+    return `Halo ${name},
 
     Terima kasih telah memesan buku dengan kami. Berikut adalah detail pesanan Anda:
     
-    Nama: ${data.userDetail.name}
-    Email: ${data.userDetail.email}
-    Alamat Pengiriman: ${data.userDetail.location}
+    Nama: ${name}
+    Email: ${email}
+    Alamat Pengiriman: ${location}
     Detail Pesanan:
     ${data.items.map((item, index) => {
       return `
         ${index + 1}. Buku "${item.title}"
         - Jumlah: ${item.count} buah
-        - Harga: Rp ${item.price} per buku`;
+        - Harga: ${formatCurrency(item.price)} per buku`;
     })}
   
     Total Pembayaran: ${
       data.items
-        ? data.items.reduce((acc, item) => acc + item.price * item.count, 0)
+        ? formatCurrency(
+            data.items.reduce((acc, item) => acc + item.price * item.count, 0)
+          )
         : 0
     }
     
@@ -227,17 +303,9 @@ const App = () => {
   };
 
   const handleCheckout = () => {
-    // if (name.length <= 2)
-    //   return setErrors({ errorName: "Name shoud atleast 3 chars!" });
-
-    // if (name.length <= 2)
-    //   return setErrors({ errorName: "Name shoud atleast 3 chars!" });
-
-    dispatch({ type: "checkout", payload: { name, email, location } });
+    dispatch({ type: "checkout", payload: formValues });
 
     const message = formatMessage(productItems);
-    console.log(productItems);
-    console.log(message);
 
     window.open(
       `http://wa.me/62881027057536?text=${encodeURIComponent(message)}`
@@ -257,6 +325,7 @@ const App = () => {
           getImage,
           serverUrl,
           getProducts,
+          containerCartRef,
           addProductsToState,
           dispatch,
           productItems,
@@ -273,11 +342,17 @@ const App = () => {
           error2,
           isButtonDisabled,
           handleInputChange,
+          formatCurrency,
+          handleDecrement,
+          handleIncrement,
+          handleRemove,
         }}
       >
         <Navbar
           count={productItems.items ? productItems.items.length : 0}
           productItems={productItems}
+          display={display}
+          dispatch={dispatch}
         />
         <Routes>
           <Route path="/" exact element={<Home />} />

@@ -40,6 +40,7 @@ const Hero = () => {
     sendDataToServerAndMovePage, 
     getImage, 
     addProductsToState,
+    formatCurrency
   } = useContext(FunctionsContext);
   
   
@@ -50,7 +51,7 @@ const Hero = () => {
         <>
         <div className="info">
           <h1>{title}</h1>
-          <h3><span>Rp {price}</span></h3> 
+          <h3><span>{formatCurrency(price)}</span></h3> 
           <p>{description}</p>
           <div className="buttons">
              <button onClick={() => sendDataToServerAndMovePage('product-info', heroProduct)}>Shop Now</button>
