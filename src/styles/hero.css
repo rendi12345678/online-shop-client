@@ -89,7 +89,6 @@
 @media (width <= 42.8rem) {
   .hero-section .hero-container {
     flex-direction: column;
-    height: 100svh;
     justify-content: center;
   }
 
