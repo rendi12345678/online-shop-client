@@ -2,8 +2,8 @@ import React, { useEffect, useState, createContext, useReducer } from 'react';
 import axios from 'axios';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
-  // const serverUrl = 'https://lovely-tan-dove.cyclic.app';
-  const serverUrl = 'http://localhost:5000';
+  const serverUrl = 'https://lovely-tan-dove.cyclic.app';
+  // const serverUrl = 'http://localhost:5000';
   
   export const addProductsToState = async (endpoint, type, dispatch) => {
     const response = await getProducts(endpoint);
