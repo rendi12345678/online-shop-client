@@ -120,10 +120,18 @@
 @media (width <= 42.8rem) {
   .product-images {
     justify-items: center;
+    align-items: end;
   }
 
   .main-image {
     max-width: 24rem;
     min-width: 10rem;
+  }
+}
+
+@media (width <= 35.6rem) {
+  .main-image {
+    max-width: 18rem;
+    min-width: 8rem;
   }
 }
