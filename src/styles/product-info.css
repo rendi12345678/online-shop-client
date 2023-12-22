@@ -17,6 +17,7 @@
   display: grid;
   grid-template-columns: 1fr;
   justify-items: start;
+  height: 100%;
   gap: 4rem;
   box-sizing: border-box;
   align-items: start;
@@ -46,6 +47,7 @@
   align-content: start;
   justify-items: start;
   box-sizing: border-box;  
+  height: 100%;
 }
 
 .product-info h3 {
@@ -99,30 +101,12 @@
   color: #fff;
 }
 
-/* You might also like */
-.you-might-also-like {
-  display: grid;
-  width: 100%;
-  padding: 0 4rem;
-  box-sizing: border-box;
-}
-
-.you-might-also-like .card-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-  column-gap: 2rem;
-  align-items: start;
-  row-gap: 4rem;
-  box-sizing: border-box;
-  margin-top: 2rem;
-}
-
 @media (width <= 42.8rem) {
   .product-images {
     justify-items: center;
     align-items: end;
   }
-
+  
   .main-image {
     max-width: 24rem;
     min-width: 10rem;
@@ -130,6 +114,11 @@
 }
 
 @media (width <= 35.6rem) {
+  .product-images {
+    justify-items: center;
+    align-items: end;
+  }
+
   .main-image {
     max-width: 18rem;
     min-width: 8rem;
