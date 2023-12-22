@@ -118,6 +118,10 @@
 }
 
 @media (width <= 42.8rem) {
+  .product-images {
+    justify-items: center;
+  }
+
   .main-image {
     max-width: 24rem;
     min-width: 10rem;
