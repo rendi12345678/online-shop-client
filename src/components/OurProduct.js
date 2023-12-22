@@ -79,7 +79,7 @@ const OurProduct = () => {
   }, []);
 
   return (
-    <section className="our-products">
+    <section className="our-products" id="our-products">
       <div className="our-products-title">
         <h2>Our Products</h2>
         <p>Temukan buku favorit anda di toko kami</p>

@@ -10,6 +10,7 @@
   --navbar-title-size: var(--h3-size);
   --container-max-width: 96rem;
   --blue-color: #0047AB;
+  --padding-size: clamp(2rem, 4svw, 4rem);
 }
 
 body {
@@ -27,8 +28,9 @@ body {
   margin: auto;
 }
 
-button {
+button, img {
   transition: 300ms;
+  border-radius: 1rem;
 }
 
 button:not(.counter button, .increment, .decrement):hover {

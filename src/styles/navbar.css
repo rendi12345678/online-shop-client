@@ -101,13 +101,14 @@ header h3 span {
 nav {
   display: flex;
   box-sizing: border-box;
+  justify-content: center;
 }
 
 nav ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: clamp(18rem, 22vw, 22rem);
+  width: clamp(18rem, 28vw, 28rem);
 }
 
 ul li {

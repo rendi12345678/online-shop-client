@@ -105,20 +105,15 @@
 }
 
 .cart-image {
-  width: clamp(8rem, 10vw, 10rem);
-  height: clamp(8rem, 10vw, 10rem);
-  background-color: #eee;
+  width: clamp(5rem, 7.5vw, 7.5rem);
   grid-row: 1 / -1;
   grid-column: 1 / 2;
   display: flex;
-  justify-content: center;
-  align-items: center;
   box-sizing: border-box;
-  padding: 1rem;
 }
 
 .cart-image img {
-  width: 80%;
+  width: 100%;
 }
 
 .delete-product {

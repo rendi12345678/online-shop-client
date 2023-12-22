@@ -20,7 +20,7 @@
   height: 100%;
   gap: 4rem;
   box-sizing: border-box;
-  align-items: start;
+  align-items: center;
 }
 
 .main-image {
@@ -44,7 +44,7 @@
 /* Product info */
 .product-info {
   display: grid;
-  align-content: start;
+  align-content: center;
   justify-items: start;
   box-sizing: border-box;  
   height: 100%;
@@ -101,10 +101,10 @@
   color: #fff;
 }
 
-@media (width <= 42.8rem) {
+@media (width <= 758px) {
   .product-images {
     justify-items: center;
-    align-items: end;
+    align-items: center;
   }
   
   .main-image {

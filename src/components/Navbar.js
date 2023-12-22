@@ -35,22 +35,22 @@ const Navbar = ({count, productItems, display, dispatch}) => {
           <nav>
             <ul ref={navRef}>
               <li>
-                <HashLink smooth to="/" onClick={handleLinkClick}>
+                <HashLink smooth to="/#hero-section" onClick={handleLinkClick}>
                   Home
                 </HashLink>
               </li>
               <li>
-                <HashLink smooth to="/" onClick={handleLinkClick}>
-                  About
+                <HashLink smooth to="/#about-us" onClick={handleLinkClick}>
+                  About Us
                 </HashLink>
               </li>
               <li>
                 <HashLink
                   smooth
-                  to="/#project-section"
+                  to="/#our-products"
                   onClick={handleLinkClick}
                 >
-                  Products
+                  Our Products
                 </HashLink>
               </li>
             </ul>
