@@ -14,7 +14,8 @@
 
 body {
   background: #fff;
-  -webkit-text-size-adjust: none;
+  overflow-x: hidden;
+  --webkit-text-size-adjust: none;
 }
 
 .App {
@@ -24,7 +25,6 @@ body {
   justify-items: center;
   width: 100%;
   margin: auto;
-  height: auto;
 }
 
 button {
@@ -41,7 +41,9 @@ button:active {
 
 h1 {
   font-size: var(--h1-size);
+  text-wrap: balance;
   line-height: 1.1;
+  max-width: 20ch;
   margin-bottom: 1rem;
   width: fit-content;
   font-weight: bold;

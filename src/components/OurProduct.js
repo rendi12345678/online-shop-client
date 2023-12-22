@@ -1,236 +1,100 @@
-import React, {useReducer, useRef, useEffect, useContext} from 'react';
-import './../styles/our-product.css';
-import axios from 'axios';
-import { FunctionsContext } from '../App.js';
+import React, { useReducer, useRef, useEffect, useContext } from "react";
+import "./../styles/our-products.css";
+import { FunctionsContext } from "../App.js";
 
 const initialState = {
-  newProducts: [],
-  onsale: [],
-  featureProducts: [],
+  ourProducts: [],
   loading: true,
-  error: '',
-  selectedCategory: 'new-products'
-}
+  error: "",
+};
 
 const reducer = (state, action) => {
-  switch(action.type) {
-    case "set-new-products":
+  switch (action.type) {
+    case "set-our-products":
       return {
-        newProducts: action.payloads,
+        ...state,
+        ourProducts: action.payloads,
         loading: false,
-        error: '',
-        selectedCategory: 'new-products'
-      }
-    case "set-onsale-products":
+        error: ""
+      };
+    case "set-loading":
       return {
-        onsale: action.payloads,
-        loading: false,
-        error: '',
-        selectedCategory: 'onsale'
-      }
-    case "set-feature-products":
-      return {
-        featureProducts: action.payloads,
-        loading: false,
-        error: '',
-        selectedCategory: 'feature-products'
-      }
-    case 'set-loading':
-      return {
-        loading: action.loading
-      }
+        ...state,
+        loading: action.loading,
+      };
     case "FETCH_ERROR":
       return {
+        ...state,
         loading: false,
-        error: 'Something went wrong!'
-      }
+        error: "Something went wrong!",
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
 const OurProduct = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const {
-    newProducts,
-    onsale, 
-    featureProducts,
-    selectedCategory,
-    error,
-    loading
-  } = state;
+  const { ourProducts, error, loading } = state;
   const cardListRef = useRef();
-  const newProductsRef = useRef();
-  const onsaleRef = useRef();
-  const featureProductsRef = useRef();
   const {
-    sendDataToServerAndMovePage, 
-    getImage, 
+    sendDataToServerAndMovePage,
+    getImage,
     formatCurrency,
-    addProductsToState
+    addProductsToState,
   } = useContext(FunctionsContext);
-  
-  const addProducts = category => {
-    if(category === 'new-products') {
-      addNewProducts();
-    }
-    
-    if(category === 'onsale') {
-      addOnsaleProducts();
-    }
-    
-    if(category === 'feature-products') {
-      addFeatureProducts();
-    }
-  }
-  
-  const addNewProducts = () => {
-   dispatch({type: "set-loading", loading: true})
-   setClasslist([
-        {
-          element: newProductsRef, 
-          className: 'selected',
-          action: 'add'
-        }, 
-        {
-          element: onsaleRef, 
-          className: 'selected',
-          action: 'remove'
-        },
-        {
-          element: featureProductsRef,
-          className: 'selected',
-          action: 'remove'
-        }]); 
-      
-      addProductsToState('/api/new-products', 'set-new-products', dispatch);
-  }
-  
-  const addOnsaleProducts = () => {
-    dispatch({type: "set-loading", loading: true});
-    setClasslist([
-        {
-          element: newProductsRef, 
-          className: 'selected',
-          action: 'remove'
-        }, 
-        {
-          element: onsaleRef, 
-          className: 'selected',
-          action: 'add'
-        },
-        {
-          element: featureProductsRef,
-          className: 'selected',
-          action: 'remove'
-        }]);
-      
-      
-      addProductsToState('/api/onsale', 'set-onsale-products', dispatch);
-  }
-  
-  const addFeatureProducts = () => {
-    dispatch({type: "set-loading", loading: true})
-    setClasslist([
-        {
-          element: newProductsRef, 
-          className: 'selected',
-          action: 'remove'
-        }, 
-        {
-          element: onsaleRef, 
-          className: 'selected',
-          action: 'remove'
-        },
-        {
-          element: featureProductsRef,
-          className: 'selected',
-          action: 'add'
-        }]);
-      
-      addProductsToState('/api/feature-products', 'set-feature-products', dispatch);
-  }
-  
-  const setClasslist = refs => {
-    refs.map(({element, className, action}) => {
-     if(action === "add") {
-       addClasslist(element, className);
-     }
-    
-     if(action === "remove") {
-       removeClasslist(element, className);
-     }
-    });
-  }
-  
-  const addClasslist = (element, className) => {
-    element.current.classList.add(className);
-  }
-  
-  const removeClasslist = (element, className) => {
-    element.current.classList.remove(className);
-  }
-  
-  const renderCards = ({image, title, price, id, description}) => {
+
+  const addOurProducts = () => {
+    dispatch({ type: "set-loading", loading: true });
+
+    addProductsToState("/api/our-products", "set-our-products", dispatch);
+  };
+
+  const renderCards = ({ image, title, price, id, description }) => {
     return (
-      <div className="card"
-           key={id}
-           onClick={() => sendDataToServerAndMovePage('product-info', {id, image, title, description, price})}>
-        <figure className="card-image" 
-           style={{
-          background: `url(${getImage(image)}) center / 50% no-repeat #eee`,
-        }}>
-        </figure>
+      <div
+        className="card"
+        key={id}
+        onClick={() =>
+          sendDataToServerAndMovePage("product-info", {
+            id,
+            image,
+            title,
+            description,
+            price,
+          })
+        }
+      >
+        <img src={getImage(image)} alt="card" className="card-image"/>
         <div className="card-info">
           <h5 className="title">{title}</h5>
           <p className="price">{formatCurrency(price)}</p>
         </div>
       </div>
     );
-  }
+  };
 
   useEffect(() => {
-    addProducts('new-products');
-  }, [])
-  
+    addOurProducts("our-products");
+  }, []);
+
   return (
-    <section className="our-product">
-      <div className="categories">
-        <h5 className="new-products selected"
-            ref={newProductsRef}
-            onClick={() => addProducts('new-products')}>New Products</h5>
-        <h5 className="onsale" 
-            ref={onsaleRef}  
-            onClick={() => addProducts('onsale')}>Onsale</h5>
-        <h5 className="feature-products"
-            ref={featureProductsRef}
-            onClick={() => addProducts('feature-products')}>Feature Products</h5>
+    <section className="our-products">
+      <div className="our-products-title">
+        <h2>Our Products</h2>
+        <p>Temukan buku favorit anda di toko kami</p>
       </div>
       <div className="card-list" ref={cardListRef}>
-        {
-          (selectedCategory === 'new-products' && newProducts) ? newProducts.map(product => {
-            return renderCards(product);
-          }) : null
-        }
-        {
-          (selectedCategory === 'onsale' && onsale) ? onsale.map(product => {
-            return renderCards(product);
-          }) : null
-        }
-        {
-          (selectedCategory === 'feature-products' && featureProducts) ? featureProducts.map(product => {
-            return renderCards(product);
-          }) : null
-        }
+        {ourProducts
+          ? ourProducts.map((product) => {
+              return renderCards(product);
+            })
+          : null}
       </div>
-        {
-          loading && <h3>Loading...</h3>
-        }
-        {
-          error !== '' && <h3 className="error-msg dua">{error}</h3>
-        }
+      {loading && <h3>Loading...</h3>}
+      {error !== "" && <h3 className="error-msg dua">{error}</h3>}
     </section>
   );
-}
+};
 
 export default OurProduct;

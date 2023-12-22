@@ -43,7 +43,6 @@
 
 
 .hero-container .info p {
-  margin-bottom: .5rem;
   font-size: var(--paragraph-size);
   line-height: 1.5;
   max-width: 42ch;
@@ -98,12 +97,20 @@
     max-width: 24rem;
     min-width: 10rem;
   }
-
+  
   .hero-section .hero-container .info {
     order: 2;
   }
-
+  
   .hero-section .hero-container .hero-image {
     order: 1;
   }
+}
+
+@media (width <= 35.6rem) {
+  .hero-image img {
+    max-width: 18rem;
+    min-width: 8rem;
+  }
+  
 }

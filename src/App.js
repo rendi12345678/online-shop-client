@@ -181,7 +181,9 @@ const reducer = (state, action) => {
 
 const App = () => {
   const navigate = useNavigate();
-  const serverUrl = "https://lovely-tan-dove.cyclic.app";
+  // const serverUrl = "https://lovely-tan-dove.cyclic.app";
+  // const clientUrl = "https://ilham-store.web.app";
+  const serverUrl = "http://localhost:5000";
   const clientUrl = "http://localhost:3000";
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
@@ -205,12 +207,15 @@ const App = () => {
     { id, title, image, description, price, count = 0 }
   ) => {
     console.log("send data to server");
+    console.log('DATA TO SEND :', title)
     const url = `${serverUrl}/api/${endpoint}`;
+    console.log("URL :", url);
     const locationUrl = window.location.href;
     const productInfoUrl = `${clientUrl}/product-info`;
 
     try {
-      await axios.post(url, { title, id, image, description, price, count });
+      const response = await axios.post(url, { title, id, image, description, price, count });
+      console.log("Response from server :", response.data);
 
       if (locationUrl === productInfoUrl) return window.location.reload();
       return movePage(endpoint);

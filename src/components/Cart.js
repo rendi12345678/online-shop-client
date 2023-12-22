@@ -30,8 +30,8 @@ function Cart() {
             <h3 className={cartStyles["cart-title"]}>Shopping Cart</h3>
             {productItems.items ? productItems.items.length !== 0 ? (
               productItems.items.map((item, index) => (
-                <>
-                  <div key={index} className={cartStyles["cart"]}>
+                <React.Fragment key={item.id} >
+                  <div className={cartStyles["cart"]}>
                     <figure className={cartStyles["cart-image"]}>
                       <img src={`img/${item.image}`} alt="Laptop" />
                     </figure>
@@ -66,7 +66,7 @@ function Cart() {
                       {formatCurrency(item.price * item.count)}
                     </h4>
                   </div>
-                </>
+                </React.Fragment>
               ))
             ) : (
               <p>Keranjang anda masih kosong!</p>
