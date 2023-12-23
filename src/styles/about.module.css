@@ -5,7 +5,7 @@
     grid-template-columns: 1fr 1fr;
     max-width: var(--container-max-width);
     padding: 0 var(--padding-size);
-    gap: 4rem;
+    gap: var(--gap-size);
 }
 
 .texts {
@@ -23,6 +23,7 @@
     object-fit: cover;
     filter: grayscale(85%) brightness(85%);
     aspect-ratio: 1 / 1;
+    z-index: -1;
 }
 
 @media (width <= 600px) {

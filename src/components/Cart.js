@@ -30,16 +30,19 @@ function Cart() {
             <h3 className={cartStyles["cart-title"]}>Shopping Cart</h3>
             {productItems.items ? productItems.items.length !== 0 ? (
               productItems.items.map((item, index) => (
-                <React.Fragment key={item.id} >
+                <React.Fragment key={item._id} >
                   <div className={cartStyles["cart"]}>
                     <figure className={cartStyles["cart-image"]}>
                       <img src={`img/${item.image}`} alt="Laptop" />
                     </figure>
                     <div className={cartStyles["info"]}>
+                      <div>
                       <h4 className="product-title">{item.title}</h4>
                       <p className="price">
                         {formatCurrency(item.price)}
                       </p>
+                        </div> 
+
                       <div className={cartStyles.counter}>
                         <button
                           className={`${cartStyles.decrement} ${cartStyles.btn}`}
@@ -82,7 +85,7 @@ function Cart() {
                     <input
                       type="text"
                       name="name"
-                      id="name"
+                      _id="name"
                       value={name}
                       onInput={handleInputChange}
                       onChange={handleInputChange}
@@ -95,7 +98,7 @@ function Cart() {
                       type="email"
                       onInput={handleInputChange}
                       name="email"
-                      id="email"
+                      _id="email"
                       pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                       value={email}
                       onChange={handleInputChange}
@@ -107,13 +110,12 @@ function Cart() {
                       type="location"
                       onInput={handleInputChange}
                       name="location"
-                      id="location"
+                      _id="location"
                       value={location}
                       onChange={handleInputChange}
                     />
                   </label>
                 </form>
-                <div></div>
                 <p className={cartStyles.total}>
                   Total{" "}
                   <span>

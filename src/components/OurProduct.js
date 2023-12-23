@@ -40,6 +40,7 @@ const OurProduct = () => {
   const {
     sendDataToServerAndMovePage,
     getImage,
+    ourProductsRef,
     formatCurrency,
     addProductsToState,
   } = useContext(FunctionsContext);
@@ -50,14 +51,14 @@ const OurProduct = () => {
     addProductsToState("/api/our-products", "set-our-products", dispatch);
   };
 
-  const renderCards = ({ image, title, price, id, description }) => {
+  const renderCards = ({ image, title, price, _id, description }) => {
     return (
       <div
         className="card"
-        key={id}
+        key={_id}
         onClick={() =>
           sendDataToServerAndMovePage("product-info", {
-            id,
+            _id,
             image,
             title,
             description,
@@ -79,11 +80,12 @@ const OurProduct = () => {
   }, []);
 
   return (
-    <section className="our-products" id="our-products">
+    <>
       <div className="our-products-title">
-        <h2>Our Products</h2>
+        <h2>Our Books</h2>
         <p>Temukan buku favorit anda di toko kami</p>
       </div>
+    <section className="our-products" _id="our-products" ref={ourProductsRef}>
       <div className="card-list" ref={cardListRef}>
         {ourProducts
           ? ourProducts.map((product) => {
@@ -93,7 +95,7 @@ const OurProduct = () => {
       </div>
       {loading && <h3>Loading...</h3>}
       {error !== "" && <h3 className="error-msg dua">{error}</h3>}
-    </section>
+    </section></>
   );
 };
 

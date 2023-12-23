@@ -10,12 +10,13 @@
 
 .hero-section .hero-container {
   display: flex;
+  width: 100%;
   padding: clamp(2rem, 4svw, 4rem);
   max-width: var(--container-max-width);
   box-sizing: border-box;
   justify-content: space-between;
   margin: auto;
-  gap: 4rem;
+  gap: var(--gap-size);
 }
 
 .hero-container .info {
@@ -38,9 +39,12 @@
 }
 
 .hero-container .info button:hover {
-  filter: brightness(90%);
+  filter: brightness(85%);
 }
 
+.hero-container .info button:active {
+  transform: scale(.95);
+}
 
 .hero-container .info p {
   font-size: var(--paragraph-size);
@@ -73,7 +77,7 @@
   width: clamp(28rem, 32vw, 32rem);
 }
 
-@media (width <= 76.8rem) {
+@media (width < 992px) {
   .hero-section .hero-container .hero-image {
     align-items: start;
     justify-content: center;
@@ -85,15 +89,14 @@
   }
 }
 
-@media (width <= 42.8rem) {
+@media (width < 768px) {
   .hero-section .hero-container {
     flex-direction: column;
     justify-content: center;
   }
-
+  
   .hero-image img {
-    max-width: 24rem;
-    min-width: 10rem;
+    width: clamp(20rem, 24vw, 24rem);
   }
   
   .hero-section .hero-container .info {
@@ -106,9 +109,8 @@
 }
 
 
-@media (width <= 35.6rem) {
+@media (width < 356px) {
   .hero-image img {
-    max-width: 18rem;
-    min-width: 8rem;
+    width: clamp(16rem, 20vw, 20rem);
   }
 }

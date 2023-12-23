@@ -19,6 +19,7 @@ const Navbar = ({count, productItems, display, dispatch}) => {
   const handleLinkClick = () => {
     setIsChecked(false);
     navToggle("");
+    dispatch({type: "set-display", payload: false});
   };
 
   const handleCartClick = () => {
@@ -50,7 +51,7 @@ const Navbar = ({count, productItems, display, dispatch}) => {
                   to="/#our-products"
                   onClick={handleLinkClick}
                 >
-                  Our Products
+                  Our Books
                 </HashLink>
               </li>
             </ul>

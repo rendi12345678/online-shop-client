@@ -6,7 +6,7 @@
   right: 0;
   bottom: 0;
   background-color: #ffffff;
-  padding: 4rem 0;
+  padding: var(--padding-size) 0;
   margin-top: var(--navbar-height);
 }
 
@@ -15,16 +15,20 @@
   grid-template-columns: 1.4fr 1fr;
   width: 100%;
   height: 100%;
-  gap: 4rem;
+  gap: var(--gap-size);
   box-sizing: border-box;
   max-width: var(--container-max-width);
   margin: auto;
-  padding: 0 4rem;
+  padding: 0 var(--padding-size);
 }
 
 .info {
   grid-row: 1 / -1;
   grid-column: 2 / 4;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .container-cart .cart .info h4 {
@@ -110,6 +114,7 @@
   grid-column: 1 / 2;
   display: flex;
   box-sizing: border-box;
+  height: 100%;
 }
 
 .cart-image img {
@@ -121,14 +126,15 @@
   grid-row: 1 / 2;
   border: 0;
   background-color: white;
+  padding: .4rem 0 0 0;
   width: fit-content;
   justify-self: end;
   font-weight: bold;
   color: #9e0000;
   height: 100%;
   display: grid;
-  align-items: center;
-  align-self: center;
+  align-items: start;
+  align-self: start;
   font-size: calc(var(--paragraph-size) - 0.4rem);
 }
 
@@ -138,9 +144,9 @@
   grid-row: 2 / 3;
   justify-self: end;
   color: #333;
-  align-self: center;
+  align-self: end;
   display: grid;
-  align-items: center;
+  align-items: end;
   height: 100%;
   letter-spacing: 0.05rem;
   margin-bottom: 0;
@@ -155,14 +161,6 @@
 .cost {
   margin: 2rem 0;
   box-sizing: border-box;
-}
-
-.cost div {
-  height: .1rem;
-  width: 100%;
-  background-color: rgba(0,0,0,.25);
-  box-sizing: border-box;
-  margin: 1rem 0;
 }
 
 .summary h4 {
@@ -226,6 +224,7 @@
 .summary .total {
   font-size: calc(var(--paragraph-size));
   font-weight: bold;
+  margin-top: 2rem;
 }
 
 .checkout {
@@ -243,6 +242,8 @@
 @media (width <= 38rem) {
   .wrapper {
     grid-template-columns: 1fr;
+    padding: 0 var(--padding-size);
+    gap: 0;
   }
 }
 

@@ -84,7 +84,7 @@ const Product = () => {
               <div className="product-images">
                 <img
                   src={getImage(image)}
-                  alt="laptop"
+                  alt="book"
                   className="main-image"
                 />
                 <figure className="other-images">

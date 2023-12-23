@@ -79,10 +79,10 @@ const reducer = (state, action) => {
       if (existingItemIndex !== -1) {
         // If the item already exists in the cart, update its count
         const updatedProductItems = state.productItems.items.map(
-          (item, index) =>
-            index === existingItemIndex
-              ? { ...item, count: action.payload.count }
-              : item
+          (item, index) => ({
+            ...item,
+            count: action.payload.count + item.count,
+          })
         );
 
         return {
@@ -181,10 +181,10 @@ const reducer = (state, action) => {
 
 const App = () => {
   const navigate = useNavigate();
-  const serverUrl = "https://lovely-tan-dove.cyclic.app";
-  const clientUrl = "https://ilham-store.web.app";
-  // const serverUrl = "http://localhost:5000";
-  // const clientUrl = "http://localhost:3000";
+  // const serverUrl = "https://lovely-tan-dove.cyclic.app";
+  // const clientUrl = "https://ilham-store.web.app";
+  const serverUrl = "http://localhost:5000";
+  const clientUrl = "http://localhost:3000";
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     count,
@@ -201,20 +201,28 @@ const App = () => {
   } = state;
   const containerCartRef = useRef();
   const { name, email, location } = formValues;
+  const ourProductsRef = useRef();
 
   const sendDataToServerAndMovePage = async (
     endpoint,
     { id, title, image, description, price, count = 0 }
   ) => {
     console.log("send data to server");
-    console.log('DATA TO SEND :', title)
+    console.log("DATA TO SEND :", title);
     const url = `${serverUrl}/api/${endpoint}`;
     console.log("URL :", url);
     const locationUrl = window.location.href;
     const productInfoUrl = `${clientUrl}/product-info`;
 
     try {
-      const response = await axios.post(url, { title, id, image, description, price, count });
+      const response = await axios.post(url, {
+        title,
+        id,
+        image,
+        description,
+        price,
+        count,
+      });
       console.log("Response from server :", response.data);
 
       if (locationUrl === productInfoUrl) return window.location.reload();
@@ -351,6 +359,7 @@ const App = () => {
           handleDecrement,
           handleIncrement,
           handleRemove,
+          ourProductsRef,
         }}
       >
         <Navbar

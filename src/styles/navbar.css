@@ -26,9 +26,9 @@ header .nav-container {
   background: #fff;
   align-items: center;
   grid-template-columns: auto 1fr auto;
-  gap: 4rem;
+  gap: var(--gap-size);
   box-sizing: border-box;
-  padding: 0 4rem;
+  padding: 0 clamp(2rem, 4svw, 4rem);
   max-width: var(--container-max-width);
 }
 

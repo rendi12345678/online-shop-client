@@ -1,14 +1,19 @@
 .our-products {
   width: 100%;
   text-align: center;
-  padding: 0 4rem;
+  overflow-x: auto;
+  padding: 0 var(--padding-size);
   box-sizing: border-box;
 }
 
-.our-products .our-products-title {
+.our-products-title {
   display: grid;
   justify-content: center;
-  margin-bottom: 2rem;
+  width: 100%;
+  text-align: center;
+  padding: 0 var(--padding-size);
+  box-sizing: border-box;
+  margin-bottom: var(--gap-size);
 }
 
 .our-products .our-products-title h2 {
@@ -21,10 +26,13 @@
 
 .our-products .card-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  column-gap: 2rem;
+
+  grid-auto-columns: 20rem;
+  column-gap: var(--gap-size);
+  min-width: 100%;
   align-items: start;
-  row-gap: 4rem;
+  grid-auto-flow: column;
+  row-gap: calc(var(--gap-size));
   box-sizing: border-box;
 }
 
@@ -33,6 +41,7 @@
   box-sizing: border-box;
   row-gap: 2rem;
   width: 100%;
+  height: 100%;
   grid-template-rows: 1fr auto;
   align-content: center;
 }
