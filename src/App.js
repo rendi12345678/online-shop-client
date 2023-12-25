@@ -72,18 +72,27 @@ const reducer = (state, action) => {
         },
       };
     case "set-product-items":
-      const existingItemIndex = state.productItems.items.findIndex(
-        (item) => item.id === action.payload.id
+      console.log("prev item data:", state.productItems.items)
+      console.log("item data:", action.payload)
+      console.log("item id:", action.payload._id)
+      const existingItem = state.productItems.items.find(
+        (item) => item._id === action.payload._id
       );
 
-      if (existingItemIndex !== -1) {
-        // If the item already exists in the cart, update its count
+      console.log("exixting item :", existingItem)
+
+      if (existingItem) {
+        console.log(existingItem)
+        console.log("Passed")
         const updatedProductItems = state.productItems.items.map(
-          (item, index) => ({
+          (item, index) => 
+          existingItem._id === item._id ? {
             ...item,
             count: action.payload.count + item.count,
-          })
+          } : item
         );
+
+        console.log("Updated product items :", updatedProductItems)
 
         return {
           ...state,
@@ -93,7 +102,6 @@ const reducer = (state, action) => {
           },
         };
       } else {
-        // If the item is not in the cart, add it
         return {
           ...state,
           productItems: {
@@ -113,7 +121,7 @@ const reducer = (state, action) => {
       };
     case "update-increment-count":
       const updatedIncrementCount = state.productItems.items.map((prevItem) => {
-        return prevItem.id === action.payload.id
+        return prevItem._id === action.payload._id
           ? { ...prevItem, count: prevItem.count + 1 }
           : prevItem;
       });
@@ -126,7 +134,7 @@ const reducer = (state, action) => {
       };
     case "update-decrement-count":
       const updatedDecrementCount = state.productItems.items.map((prevItem) => {
-        return prevItem.id === action.payload.id
+        return prevItem._id === action.payload._id
           ? {
               ...prevItem,
               count: prevItem.count - 1 < 1 ? 1 : prevItem.count - 1,
@@ -147,7 +155,7 @@ const reducer = (state, action) => {
         ...state,
         productItems: {
           items: state.productItems.items.filter(
-            (prevItem) => prevItem.id !== action.payload.id
+            (prevItem) => prevItem._id !== action.payload._id
           ),
           userDetail: state.productItems.userDetail,
         },
@@ -181,10 +189,10 @@ const reducer = (state, action) => {
 
 const App = () => {
   const navigate = useNavigate();
-  const serverUrl = "https://lovely-tan-dove.cyclic.app";
-  const clientUrl = "https://ilham-store.web.app";
-  // const serverUrl = "http://localhost:5000";
-  // const clientUrl = "http://localhost:3000";
+  // const serverUrl = "https://lovely-tan-dove.cyclic.app";
+  // const clientUrl = "https://ilham-store.web.app";
+  const serverUrl = "http://localhost:5000";
+  const clientUrl = "http://localhost:3000";
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     count,
@@ -205,7 +213,7 @@ const App = () => {
 
   const sendDataToServerAndMovePage = async (
     endpoint,
-    { id, title, image, description, price, count = 0 }
+    { _id, title, image, description, price, count = 0 }
   ) => {
     console.log("send data to server");
     console.log("DATA TO SEND :", title);
@@ -217,7 +225,7 @@ const App = () => {
     try {
       const response = await axios.post(url, {
         title,
-        id,
+        _id,
         image,
         description,
         price,

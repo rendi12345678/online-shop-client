@@ -49,7 +49,7 @@
 .hero-container .info p {
   font-size: var(--paragraph-size);
   line-height: 1.5;
-  color: #777;
+  color: #444;
 }
 
 .hero-container .info h3 span {

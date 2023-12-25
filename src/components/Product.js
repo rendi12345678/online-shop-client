@@ -52,7 +52,7 @@ const Product = () => {
     image,
     title,
     price,
-    id,
+    _id,
     description,
     count,
   }) => {
@@ -63,7 +63,7 @@ const Product = () => {
         image,
         title,
         price,
-        id,
+        _id,
         description,
         count,
       },
@@ -79,8 +79,8 @@ const Product = () => {
       <section className="product">
         {productInfo.length !== 0 &&
           infoLoading === false &&
-          productInfo.map(({ image, title, price, id, description }) => (
-            <React.Fragment key={id}>
+          productInfo.map(({ image, title, price, _id, description }) => (
+            <React.Fragment key={_id}>
               <div className="product-images">
                 <img
                   src={getImage(image)}
@@ -120,7 +120,7 @@ const Product = () => {
                         image,
                         title,
                         price,
-                        id,
+                        _id,
                         description,
                         count,
                       })

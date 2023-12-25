@@ -81,11 +81,11 @@ const OurProduct = () => {
 
   return (
     <>
-      <div className="our-products-title">
+      <div className="our-products-title" id="our-products" ref={ourProductsRef}>
         <h2>Our Books</h2>
         <p>Temukan buku favorit anda di toko kami</p>
       </div>
-    <section className="our-products" _id="our-products" ref={ourProductsRef}>
+    <section className="our-products">
       <div className="card-list" ref={cardListRef}>
         {ourProducts
           ? ourProducts.map((product) => {
