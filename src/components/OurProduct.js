@@ -1,6 +1,8 @@
 import React, { useReducer, useRef, useEffect, useContext } from "react";
 import "./../styles/our-products.css";
 import { FunctionsContext } from "../App.js";
+import {useSetLocalStorage} from "../hooks/useSetLocalStorage.js";
+import { useNavigate } from "react-router-dom"  
 
 const initialState = {
   ourProducts: [],
@@ -43,13 +45,37 @@ const OurProduct = () => {
     ourProductsRef,
     formatCurrency,
     addProductsToState,
+    movePage
   } = useContext(FunctionsContext);
+  const [value, setValue] = useSetLocalStorage("product-info", {
+    _id: "",
+            image: "",
+            title: "",
+            description: "",
+            price: 0,
+  });
+  const navigate = useNavigate();
 
   const addOurProducts = () => {
     dispatch({ type: "set-loading", loading: true });
 
     addProductsToState("/api/our-products", "set-our-products", dispatch);
   };
+  
+  const addDataToProductInfo = ({         
+            _id,
+            image,
+            title,
+            description,
+            price}) => {
+     navigate('/product-info', {state: {
+            _id,
+            image,
+            title,
+            description,
+            price
+     }});
+  }
 
   const renderCards = ({ image, title, price, _id, description }) => {
     return (
@@ -57,13 +83,7 @@ const OurProduct = () => {
         className="card"
         key={_id}
         onClick={() =>
-          sendDataToServerAndMovePage("product-info", {
-            _id,
-            image,
-            title,
-            description,
-            price,
-          })
+           addDataToProductInfo({image, title, price, _id, description})
         }
       >
         <img src={getImage(image)} alt="card" className="card-image"/>
@@ -78,7 +98,7 @@ const OurProduct = () => {
   useEffect(() => {
     addOurProducts("our-products");
   }, []);
-
+ 
   return (
     <>
       <div className="our-products-title" id="our-products" ref={ourProductsRef}>

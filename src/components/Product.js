@@ -1,5 +1,6 @@
-import React, { useReducer, useEffect, useContext } from "react";
+import React, { useReducer, useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom"
 import { FunctionsContext } from "../App.js";
 
 const Product = () => {
@@ -13,6 +14,9 @@ const Product = () => {
     formatCurrency,
     dispatch,
   } = useContext(FunctionsContext);
+  const location = useLocation();
+  const { image, title, price, _id, description } = location.state;
+  
 
   const addDataToState = (url, action) => {
     axios
@@ -44,10 +48,6 @@ const Product = () => {
     }
   };
 
-  const fetchData = () => {
-    addDataToState(`${serverUrl}/api/product-info`, "set-product-info");
-  };
-
   const addProductToCart = ({
     image,
     title,
@@ -70,17 +70,9 @@ const Product = () => {
     });
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
     <>
       <section className="product">
-        {productInfo.length !== 0 &&
-          infoLoading === false &&
-          productInfo.map(({ image, title, price, _id, description }) => (
-            <React.Fragment key={_id}>
               <div className="product-images">
                 <img
                   src={getImage(image)}
@@ -130,10 +122,6 @@ const Product = () => {
                   </button>
                 </div>
               </div>
-            </React.Fragment>
-          ))}
-        {error !== "" && <h3 className="error-msg">{error}</h3>}
-        {infoLoading && <h3 className="loading">Loading...</h3>}
       </section>
     </>
   );
