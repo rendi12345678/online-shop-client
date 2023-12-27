@@ -18,6 +18,13 @@
   color: #333;
 }
 
+.contact label p {
+  color: red;
+  margin-top: .8rem;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
 .contact input,
 .contact textarea {
   margin-top: 1rem;
