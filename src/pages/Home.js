@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Hero from './../components/Hero';
 import OurProduct from './../components/OurProduct';
 import Footer from './../components/Footer';
@@ -6,6 +6,10 @@ import { About } from '../components/About';
 import { Contact } from '../components/Contact';
 
 const Home = () => {
+  useEffect(() => {
+    window.document.title = "Home"
+  }, [])
+  
   return (
     <>
       <Hero/> 

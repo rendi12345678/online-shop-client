@@ -189,10 +189,10 @@ const reducer = (state, action) => {
 
 const App = () => {
   const navigate = useNavigate();
-   const serverUrl = "https://lovely-tan-dove.cyclic.app";
-   const clientUrl = "https://ilham-store.web.app";
-  //  const serverUrl = "http://localhost:5000";
-  //  const clientUrl = "http://localhost:3000";
+   //const serverUrl = "https://lovely-tan-dove.cyclic.app";
+   //const clientUrl = "https://ilham-store.web.app";
+    const serverUrl = "http://localhost:5000";
+    const clientUrl = "http://localhost:3000";
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     count,
@@ -337,6 +337,10 @@ const App = () => {
     window.localStorage.setItem("product-items", JSON.stringify(productItems));
     console.log(productItems);
   }, [productItems]);
+  
+  useEffect(() => {
+    window.document.title = "Home"
+  }, [])
 
   return (
     <div className="App">
