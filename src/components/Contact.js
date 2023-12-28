@@ -44,7 +44,7 @@ export const Contact = ({
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-    const response = await axios.post("http://localhost:5000/api/send-email", formData)
+    const response = await axios.post("https://lovely-tan-dove.cyclic.app/api/send-email", formData)
       
       if(!response.data.success) {
           response.data.errors.map(error =>
@@ -67,7 +67,7 @@ export const Contact = ({
   }
 
   return (
-    <section className={contactStyles.contact} style={{ width: width }}>
+    <section className={contactStyles.contact} style={{ width: width }} id="contact-us">
       <div className={contactStyles["contact-title"]}>
         <h2>Contact Us</h2>
         <p>{text}</p>

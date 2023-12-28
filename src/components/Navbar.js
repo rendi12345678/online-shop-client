@@ -54,6 +54,15 @@ const Navbar = ({count, productItems, display, dispatch}) => {
                   Our Books
                 </HashLink>
               </li>
+              <li>
+                <HashLink
+                  smooth
+                  to="/#contact-us"
+                  onClick={handleLinkClick}
+                >
+                  Contact Us
+                </HashLink>
+              </li>
             </ul>
           </nav>
           <button className="cart-icon" onClick={handleCartClick}>
