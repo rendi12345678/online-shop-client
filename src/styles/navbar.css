@@ -108,7 +108,7 @@ nav ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: clamp(18rem, 28vw, 28rem);
+  width: clamp(28rem, 34vw, 34rem);
 }
 
 ul li {
