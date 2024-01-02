@@ -329,7 +329,7 @@ const App = () => {
     const message = formatMessage(productItems);
 
     window.open(
-      `http://wa.me/62881027057536?text=${encodeURIComponent(message)}`
+      `http://wa.me/6285733300369?text=${encodeURIComponent(message)}`
     );
   };
 
