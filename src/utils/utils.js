@@ -1,7 +1,7 @@
 import axios from "axios";
 
-//const serverUrl = "https://lovely-tan-dove.cyclic.app";
- const serverUrl = 'http://localhost:5000';
+const serverUrl = "https://lovely-tan-dove.cyclic.app";
+ // const serverUrl = 'http://localhost:5000';
 
 export const addProductsToState = async (endpoint, type, dispatch) => {
   const response = await getProducts(endpoint);
