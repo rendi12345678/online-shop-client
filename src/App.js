@@ -191,8 +191,8 @@ const App = () => {
   const navigate = useNavigate();
    const serverUrl = "https://lovely-tan-dove.cyclic.app";
    const clientUrl = "https://ilham-store.web.app";
-  //  const serverUrl = "http://localhost:5000";
-  //  const clientUrl = "http://localhost:3000";
+    // const serverUrl = "http://localhost:5000";
+//     const clientUrl = "http://localhost:3000";
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     count,
@@ -329,7 +329,7 @@ const App = () => {
     const message = formatMessage(productItems);
 
     window.open(
-      `http://wa.me/62881027057536?text=${encodeURIComponent(message)}`
+      `http://wa.me/6285733300369?text=${encodeURIComponent(message)}`
     );
   };
 
@@ -337,6 +337,10 @@ const App = () => {
     window.localStorage.setItem("product-items", JSON.stringify(productItems));
     console.log(productItems);
   }, [productItems]);
+  
+  useEffect(() => {
+    window.document.title = "Home"
+  }, [])
 
   return (
     <div className="App">
