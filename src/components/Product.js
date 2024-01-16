@@ -1,13 +1,12 @@
 import React, { useReducer, useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom";
 import { FunctionsContext } from "../App.js";
 
 const Product = () => {
   const {
     getImage,
     serverUrl,
-    count,
     productInfo,
     error,
     infoLoading,
@@ -16,7 +15,17 @@ const Product = () => {
   } = useContext(FunctionsContext);
   const location = useLocation();
   const { image, title, price, _id, description } = location.state;
-  
+  const [count, setCount] = useState(1);
+
+  const handleIncrement = () => {
+    setCount((prevCount) => prevCount + 1);
+  }
+
+  const handleDecrement = () => {
+    setCount((prevCount) =>
+      prevCount - 1 > 1 ? prevCount - 1 : 1
+    );
+  };
 
   const addDataToState = (url, action) => {
     axios
@@ -73,55 +82,45 @@ const Product = () => {
   return (
     <>
       <section className="product">
-              <div className="product-images">
-                <img
-                  src={getImage(image)}
-                  alt="book"
-                  className="main-image"
-                />
-                <figure className="other-images">
-                  <img src={getImage(image)} alt="laptop" />
-                  <img src={getImage(image)} alt="laptop" />
-                  <img src={getImage(image)} alt="laptop" />
-                </figure>
-              </div>
-              <div className="product-info">
-                <h1>{title}</h1>
-                <h3>{formatCurrency(price)}</h3>
-                <p>{description}</p>
-                <div className="buttons">
-                  <div className="counter">
-                    <button
-                      className="decrement"
-                      onClick={() => dispatch({ type: "decrement" })}
-                    >
-                      -
-                    </button>
-                    <p className="count">{count}</p>
-                    <button
-                      className="increment"
-                      onClick={() => dispatch({ type: "increment" })}
-                    >
-                      +
-                    </button>
-                  </div>
-                  <button
-                    className="add-to-cart-btn"
-                    onClick={() =>
-                      addProductToCart({
-                        image,
-                        title,
-                        price,
-                        _id,
-                        description,
-                        count,
-                      })
-                    }
-                  >
-                    Add To Cart
-                  </button>
-                </div>
-              </div>
+        <div className="product-images">
+          <img src={getImage(image)} alt="book" className="main-image" />
+          <figure className="other-images">
+            <img src={getImage(image)} alt="laptop" />
+            <img src={getImage(image)} alt="laptop" />
+            <img src={getImage(image)} alt="laptop" />
+          </figure>
+        </div>
+        <div className="product-info">
+          <h1>{title}</h1>
+          <h3>{formatCurrency(price)}</h3>
+          <p>{description}</p>
+          <div className="buttons">
+            <div className="counter">
+              <button className="decrement" onClick={handleDecrement}>
+                -
+              </button>
+              <p className="count">{count}</p>
+              <button className="increment" onClick={handleIncrement}>
+                +
+              </button>
+            </div>
+            <button
+              className="add-to-cart-btn"
+              onClick={() =>
+                addProductToCart({
+                  image,
+                  title,
+                  price,
+                  _id,
+                  description,
+                  count,
+                })
+              }
+            >
+              Add To Cart
+            </button>
+          </div>
+        </div>
       </section>
     </>
   );
